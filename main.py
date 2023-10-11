@@ -1,9 +1,9 @@
 import os, sys
-from code.virtual_cls import VirSys
+from code.Meta_Class import MetaSystem
 
 
 def main():
-    virtual_proj = VirSys()
+    virtual_proj = MetaSystem()
     pass
 
 if __name__ == "__main__":
