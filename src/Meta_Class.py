@@ -1,5 +1,5 @@
 import cv2, time
-from code.finger_gesture_drag_block import finger_gesture_drag_block
+from src.finger_gesture_drag_block import finger_gesture_drag_block
 
 class MetaSystem(object):
     '''
@@ -14,8 +14,9 @@ class MetaSystem(object):
     def __init__(self) -> None:
         self.status = 0
         self.cameraparam = CameraParam()
+        self.mate_0 = finger_gesture_drag_block()
         self.RunCase = {
-            0: finger_gesture_drag_block    
+            0: self.mate_0    
         }
 
     def _SysCheck(self):
@@ -35,8 +36,8 @@ class MetaSystem(object):
         self.cameraparam.img_width = img_width
 
         cap.release()
-
         self.status = 2 
+        print("系统状态已经检测完成status:{}".format(self.status))
         pass
 
     def MetaProj(self):
@@ -44,17 +45,23 @@ class MetaSystem(object):
         # 超过3s后，默认执行手势拖动方块任务
         start_time = time.time()
         cur_time = time.time()
+        project_infos = {
+            0: "手势拖转方框娱乐项目,祝您玩的开心!!!"
+        }
+        # while 1:
+        #     cur_time = time.time()
 
-        while 1:
-            cur_time = time.time()
-
-            if (cur_time - start_time) > 3:
-                fun_case = 0
-                break
-        self.select_proj = self.MetaProj[fun_case]
+        #     if (cur_time - start_time) > 3:
+        #         fun_case = 0
+        #         break
+        print("请输入需要运行的项目:")
+        # fun_case = int(input())
+        print("您需要参与的项目为:{}".format(project_infos[0]))
+        # self.select_proj = self.RunCase[fun_case]
 
     def MetaRun(self):
-        self.select_proj.Run(self)
+        print("111")
+        self.mate_0.Run(self)
 
 
 class CameraParam():

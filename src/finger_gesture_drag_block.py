@@ -24,6 +24,9 @@ class finger_gesture_drag_block():
         pass
     
     def Run(self,metasystem):
+        # square_x, square_y, square_width = 100, 100, 100
+        square_isactivate = False
+        square_color = (255,0,0)
         cap = cv2.VideoCapture(0)
         while True:
             res, frame = cap.read()
@@ -64,23 +67,23 @@ class finger_gesture_drag_block():
                     finger_dis = np.linalg.norm([index_finger_x-middle_finger_x,index_finger_y-middle_finger_y])
                     print(finger_dis)
                 if finger_dis < 30:
-                    if (index_finger_x > square_x) and (index_finger_x < square_x+metasystem.cameraparam.s_w) and \
-                       (index_finger_y > square_y) and (index_finger_y < square_y+metasystem.cameraparam.s_w):
+                    if (index_finger_x > self.s_x) and (index_finger_x < self.s_x + self.s_w) and \
+                       (index_finger_y > self.s_y) and (index_finger_y < self.s_y + self.s_w):
                         if not square_isactivate:
-                            l1 = index_finger_x - square_x
-                            l2 = index_finger_y - square_y
+                            l1 = index_finger_x - self.s_x
+                            l2 = index_finger_y - self.s_y
                             square_isactivate = True
                             square_color = (255,255,0)
                 else:
                     square_isactivate = False
                     square_color = (0,255,0)
                 if square_isactivate:
-                    square_x = index_finger_x - l1
-                    square_y = index_finger_y - l2
+                    self.s_x = index_finger_x - l1
+                    self.s_y = index_finger_y - l2
             cv2.circle(frame,(index_finger_x,index_finger_y),radius=10,color=(0,255,255), thickness=-1)
             overlay = frame.copy()
 
-            cv2.rectangle(frame, (square_x, square_y), (square_x+ metasystem.cameraparam.img_width, square_y+ metasystem.cameraparam.img_width),color=square_color,thickness=-1)
+            cv2.rectangle(frame, (self.s_x, self.s_y), (self.s_x+ self.s_w, self.s_y+self.s_w),color=square_color,thickness=-1)
             frame = cv2.addWeighted(overlay, 0.5, frame, 1 - 0.5, 0)
             
             cv2.imshow("Virtual Img", frame)

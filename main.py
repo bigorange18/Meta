@@ -1,9 +1,14 @@
 import os, sys
-from code.Meta_Class import MetaSystem
+from src.Meta_Class import MetaSystem
 
 
 def main():
-    virtual_proj = MetaSystem()
+    mateverse = MetaSystem()
+    mateverse._SysCheck()
+    mateverse.MetaProj()
+    mateverse.MetaRun()
+
+
     pass
 
 if __name__ == "__main__":
