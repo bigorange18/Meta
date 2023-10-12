@@ -1,5 +1,5 @@
 import cv2, time
-from src.finger_gesture_drag_block import finger_gesture_drag_block
+from src.finger_gesture_drag_block import HandControlVolume
 
 class MetaSystem(object):
     '''
@@ -14,7 +14,7 @@ class MetaSystem(object):
     def __init__(self) -> None:
         self.status = 0
         self.cameraparam = CameraParam()
-        self.mate_0 = finger_gesture_drag_block()
+        self.mate_0 = HandControlVolume()
         self.RunCase = {
             0: self.mate_0    
         }
@@ -57,11 +57,12 @@ class MetaSystem(object):
         print("请输入需要运行的项目:")
         # fun_case = int(input())
         print("您需要参与的项目为:{}".format(project_infos[0]))
+        print("按ESC键退出")
         # self.select_proj = self.RunCase[fun_case]
 
     def MetaRun(self):
         print("111")
-        self.mate_0.Run(self)
+        self.mate_0.Run()
 
 
 class CameraParam():

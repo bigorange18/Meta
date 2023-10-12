@@ -1,178 +1,249 @@
-import cv2
+import cv2, time, math
 import numpy as np
 import mediapipe as mp
-mp_drawing = mp.solutions.drawing_utils
-mp_drawing_styles = mp.solutions.drawing_styles
-mp_hands = mp.solutions.hands
-
-hands =  mp_hands.Hands(
-            model_complexity=0,
-            min_detection_confidence=0.5,
-            min_tracking_confidence=0.5)
 
 
+# 方块管理类
+class SquareManager:
+    def __init__(self, rect_width):
 
+        # 方框长度
+        self.rect_width = rect_width
 
-class finger_gesture_drag_block():
-    '''
-    @s_x,s_y,s_w:初始时方块在图像上的像素点位置
-    '''
-    def __init__(self,s_x=100,s_y=100,s_w=100) -> None:
-        self.s_x = s_x
-        self.s_y = s_y
-        self.s_w = s_w
-        pass
-    
-    def Run(self,metasystem):
-        # square_x, square_y, square_width = 100, 100, 100
-        square_isactivate = False
-        square_color = (255,0,0)
-        cap = cv2.VideoCapture(0)
-        while True:
-            res, frame = cap.read()
-            frame = cv2.flip(frame, 1)
+        # 方块list
+        self.square_count = 0
+        self.rect_left_x_list = []
+        self.rect_left_y_list = []
+        self.alpha_list = []
 
-            frame.flags.writeable=False
-            frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-            result = hands.process(frame)
+        # 中指与矩形左上角点的距离
+        self.L1 = 0
+        self.L2 = 0
 
-            frame.flags.writeable = True
-            frame = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)
+        # 激活移动模式
+        self.drag_active = False
 
-            # 判断是否出现双手
-            if result.multi_hand_landmarks:
-                # 遍历每双手
-                for hands_landmark in result.multi_hand_landmarks:
-                    # 绘制21个关键点
-                    mp_drawing.draw_landmarks(
-                        frame,
-                        hands_landmark,
-                        mp_hands.HAND_CONNECTIONS,
-                        mp_drawing_styles.get_default_hand_landmarks_style(),
-                        mp_drawing_styles.get_default_hand_connections_style()
-                    )
+        # 激活的方块ID
+        self.active_index = -1
 
-                    # 保存食指点坐标
-                    hand_x_list = []
-                    hand_y_list = []
-                    for hand in hands_landmark.landmark:
-                        hand_x_list.append(hand.x)
-                        hand_y_list.append(hand.y)
-                    index_finger_x = int(hand_x_list[8] * metasystem.cameraparam.img_width)
-                    index_finger_y = int(hand_y_list[8] * metasystem.cameraparam.img_high)
+    # 创建一个方块，但是没有显示
+    def create(self, rect_left_x, rect_left_y, alpha=0.4):
+        self.rect_left_x_list.append(rect_left_x)
+        self.rect_left_y_list.append(rect_left_y)
+        self.alpha_list.append(alpha)
+        self.square_count += 1
 
-                    middle_finger_x = int(hand_x_list[12] * metasystem.cameraparam.img_width)
-                    middle_finger_y = int(hand_y_list[12] * metasystem.cameraparam.img_high)
+    # 更新位置
+    def display(self, class_obj):
+        for i in range(0, self.square_count):
+            x = self.rect_left_x_list[i]
+            y = self.rect_left_y_list[i]
+            alpha = self.alpha_list[i]
 
-                    finger_dis = np.linalg.norm([index_finger_x-middle_finger_x,index_finger_y-middle_finger_y])
-                    print(finger_dis)
-                if finger_dis < 30:
-                    if (index_finger_x > self.s_x) and (index_finger_x < self.s_x + self.s_w) and \
-                       (index_finger_y > self.s_y) and (index_finger_y < self.s_y + self.s_w):
-                        if not square_isactivate:
-                            l1 = index_finger_x - self.s_x
-                            l2 = index_finger_y - self.s_y
-                            square_isactivate = True
-                            square_color = (255,255,0)
-                else:
-                    square_isactivate = False
-                    square_color = (0,255,0)
-                if square_isactivate:
-                    self.s_x = index_finger_x - l1
-                    self.s_y = index_finger_y - l2
-            cv2.circle(frame,(index_finger_x,index_finger_y),radius=10,color=(0,255,255), thickness=-1)
-            overlay = frame.copy()
+            overlay = class_obj.image.copy()
 
-            cv2.rectangle(frame, (self.s_x, self.s_y), (self.s_x+ self.s_w, self.s_y+self.s_w),color=square_color,thickness=-1)
-            frame = cv2.addWeighted(overlay, 0.5, frame, 1 - 0.5, 0)
-            
-            cv2.imshow("Virtual Img", frame)
-
-            if cv2.waitKey(10) & 0xFF == 27:
-                break
-        pass
-
-        cap.release()
-
-
-def main():
-
-
-    square_x, square_y, square_width = 100, 100, 100
-    square_isactivate = False
-    square_color = (255,0,0)
-    cap = cv2.VideoCapture(0)
-
-    # img宽高
-    img_width =int( cap.get(cv2.CAP_PROP_FRAME_WIDTH))
-    img_high = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
-
-
-    while True:
-        res, frame = cap.read()
-        frame = cv2.flip(frame, 1)
-
-        frame.flags.writeable=False
-        frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-        result = hands.process(frame)
-
-        frame.flags.writeable = True
-        frame = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)
-
-        # 判断是否出现双手
-        if result.multi_hand_landmarks:
-            # 遍历每双手
-            for hands_landmark in result.multi_hand_landmarks:
-                # 绘制21个关键点
-                mp_drawing.draw_landmarks(
-                    frame,
-                    hands_landmark,
-                    mp_hands.HAND_CONNECTIONS,
-                    mp_drawing_styles.get_default_hand_landmarks_style(),
-                    mp_drawing_styles.get_default_hand_connections_style()
-                )
-
-                # 保存食指点坐标
-                hand_x_list = []
-                hand_y_list = []
-                for hand in hands_landmark.landmark:
-                    hand_x_list.append(hand.x)
-                    hand_y_list.append(hand.y)
-                index_finger_x = int(hand_x_list[8] * img_width)
-                index_finger_y = int(hand_y_list[8] * img_high)
-
-                middle_finger_x = int(hand_x_list[12] * img_width)
-                middle_finger_y = int(hand_y_list[12] * img_high)
-
-                finger_dis = np.linalg.norm([index_finger_x-middle_finger_x,index_finger_y-middle_finger_y])
-                print(finger_dis)
-            if finger_dis < 30:
-                if (index_finger_x > square_x) and (index_finger_x < square_x+square_width) and \
-                (index_finger_y > square_y) and (index_finger_y < square_y+square_width):
-                    if not square_isactivate:
-                        l1 = index_finger_x - square_x
-                        l2 = index_finger_y - square_y
-                        square_isactivate = True
-                        square_color = (255,255,0)
+            if (i == self.active_index):
+                cv2.rectangle(overlay, (x, y), (x + self.rect_width, y + self.rect_width), (255, 0, 255), -1)
             else:
-                square_isactivate = False
-                square_color = (0,255,0)
-            if square_isactivate:
-                square_x = index_finger_x - l1
-                square_y = index_finger_y - l2
-        cv2.circle(frame,(index_finger_x,index_finger_y),radius=10,color=(0,255,255), thickness=-1)
-        overlay = frame.copy()
+                cv2.rectangle(overlay, (x, y), (x + self.rect_width, y + self.rect_width), (255, 0, 0), -1)
 
-        cv2.rectangle(frame, (square_x, square_y), (square_x+square_width, square_y+square_width),color=square_color,thickness=-1)
-        frame = cv2.addWeighted(overlay, 0.5, frame, 1 - 0.5, 0)
-        
-        cv2.imshow("Virtual Img", frame)
+            # Following line overlays transparent rectangle over the self.image
+            class_obj.image = cv2.addWeighted(overlay, alpha, class_obj.image, 1 - alpha, 0)
 
-        if cv2.waitKey(10) & 0xFF == 27:
-            break
-    pass
+    # 判断落在哪个方块上，返回方块的ID
+    def checkOverlay(self, check_x, check_y):
+        for i in range(0, self.square_count):
+            x = self.rect_left_x_list[i]
+            y = self.rect_left_y_list[i]
 
-    cap.release()
+            if (x < check_x < (x + self.rect_width)) and (y < check_y < (y + self.rect_width)):
+                # 保存被激活的方块ID
+                self.active_index = i
+                return i
+        return -1
 
-if __name__=="__main__":
-    main()
+    # 计算与指尖的距离
+    def setLen(self, check_x, check_y):
+        # 计算距离
+        self.L1 = check_x - self.rect_left_x_list[self.active_index]
+        self.L2 = check_y - self.rect_left_y_list[self.active_index]
+
+    # 更新方块    
+    def updateSquare(self, new_x, new_y):
+        # print(self.rect_left_x_list[self.active_index])
+        self.rect_left_x_list[self.active_index] = new_x - self.L1
+        self.rect_left_y_list[self.active_index] = new_y - self.L2
+
+
+# 识别控制类
+class HandControlVolume:
+    def __init__(self):
+        # 初始化medialpipe
+        self.mp_drawing = mp.solutions.drawing_utils
+        self.mp_drawing_styles = mp.solutions.drawing_styles
+        self.mp_hands = mp.solutions.hands
+
+        # 中指与矩形左上角点的距离
+        self.L1 = 0
+        self.L2 = 0
+
+        # image实例，以便另一个类调用
+        self.image = None
+
+    # 主函数
+    def Run(self):
+        # 计算刷新率
+        fpsTime = time.time()
+
+        # OpenCV读取视频流
+        cap = cv2.VideoCapture(0)
+        # 视频分辨率
+        resize_w = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+        resize_h = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+
+        # 画面显示初始化参数
+        rect_percent_text = 0
+
+        # 初始化方块管理器
+        squareManager = SquareManager(150)
+
+        # 创建多个方块
+        for i in range(0, 1):
+            squareManager.create(200 * i + 20, 200, 0.6)
+
+        with self.mp_hands.Hands(min_detection_confidence=0.7,
+                                 min_tracking_confidence=0.5,
+                                 max_num_hands=2) as hands:
+            while cap.isOpened():
+
+                # 初始化矩形
+                success, self.image = cap.read()
+                self.image = cv2.resize(self.image, (resize_w, resize_h))
+
+                if not success:
+                    print("空帧.")
+                    continue
+
+                # 提高性能
+                self.image.flags.writeable = False
+                # 转为RGB
+                self.image = cv2.cvtColor(self.image, cv2.COLOR_BGR2RGB)
+                # 镜像
+                self.image = cv2.flip(self.image, 1)
+                # mediapipe模型处理
+                results = hands.process(self.image)
+
+                self.image.flags.writeable = True
+                self.image = cv2.cvtColor(self.image, cv2.COLOR_RGB2BGR)
+                # 判断是否有手掌
+                if results.multi_hand_landmarks:
+                    # 遍历每个手掌
+                    for hand_landmarks in results.multi_hand_landmarks:
+                        # 在画面标注手指
+                        self.mp_drawing.draw_landmarks(
+                            self.image,
+                            hand_landmarks,
+                            self.mp_hands.HAND_CONNECTIONS,
+                            self.mp_drawing_styles.get_default_hand_landmarks_style(),
+                            self.mp_drawing_styles.get_default_hand_connections_style())
+
+                        # 解析手指，存入各个手指坐标
+                        landmark_list = []
+
+                        # 用来存储手掌范围的矩形坐标
+                        paw_x_list = []
+                        paw_y_list = []
+                        for landmark_id, finger_axis in enumerate(
+                                hand_landmarks.landmark):
+                            landmark_list.append([
+                                landmark_id, finger_axis.x, finger_axis.y,
+                                finger_axis.z
+                            ])
+                            paw_x_list.append(finger_axis.x)
+                            paw_y_list.append(finger_axis.y)
+                        if landmark_list:
+                            # 比例缩放到像素
+                            ratio_x_to_pixel = lambda x: math.ceil(x * resize_w)
+                            ratio_y_to_pixel = lambda y: math.ceil(y * resize_h)
+
+                            # 设计手掌左上角、右下角坐标
+                            paw_left_top_x, paw_right_bottom_x = map(ratio_x_to_pixel,
+                                                                     [min(paw_x_list), max(paw_x_list)])
+                            paw_left_top_y, paw_right_bottom_y = map(ratio_y_to_pixel,
+                                                                     [min(paw_y_list), max(paw_y_list)])
+
+                            # 给手掌画框框
+                            cv2.rectangle(self.image, (paw_left_top_x - 30, paw_left_top_y - 30),
+                                          (paw_right_bottom_x + 30, paw_right_bottom_y + 30), (0, 255, 0), 2)
+
+                            # 获取中指指尖坐标
+                            middle_finger_tip = landmark_list[12]
+                            middle_finger_tip_x = ratio_x_to_pixel(middle_finger_tip[1])
+                            middle_finger_tip_y = ratio_y_to_pixel(middle_finger_tip[2])
+
+                            # 获取食指指尖坐标
+                            index_finger_tip = landmark_list[8]
+                            index_finger_tip_x = ratio_x_to_pixel(index_finger_tip[1])
+                            index_finger_tip_y = ratio_y_to_pixel(index_finger_tip[2])
+                            # 中间点
+                            between_finger_tip = (middle_finger_tip_x + index_finger_tip_x) // 2, \
+                                                 (middle_finger_tip_y + index_finger_tip_y) // 2
+                            # print(middle_finger_tip_x)
+                            thumb_finger_point = (middle_finger_tip_x, middle_finger_tip_y)
+                            index_finger_point = (index_finger_tip_x, index_finger_tip_y)
+                            # 画指尖2点
+                            circle_func = lambda point: cv2.circle(self.image, point, 2, (255, 0, 255), -1)
+                            self.image = circle_func(thumb_finger_point)
+                            self.image = circle_func(index_finger_point)
+                            self.image = circle_func(between_finger_tip)
+                            # 画2点连线
+                            self.image = cv2.line(self.image, thumb_finger_point, index_finger_point, (255, 0, 255), 5)
+                            # 勾股定理计算长度
+                            line_len = math.hypot((index_finger_tip_x - middle_finger_tip_x),
+                                                  (index_finger_tip_y - middle_finger_tip_y))
+                            # 将指尖距离映射到文字
+                            rect_percent_text = math.ceil(line_len)
+
+                            # 激活模式，需要让矩形跟随移动
+                            if squareManager.drag_active:
+                                # 更新方块
+                                squareManager.updateSquare(between_finger_tip[0], between_finger_tip[1])
+                                if (line_len > 60):
+                                    # 取消激活
+                                    squareManager.drag_active = False
+                                    squareManager.active_index = -1
+
+                            elif (line_len < 60) and (squareManager.checkOverlay(between_finger_tip[0],
+                                                                                  between_finger_tip[1]) != -1) and (
+                                    squareManager.drag_active == False):
+                                # 激活
+                                squareManager.drag_active = True
+                                # 计算距离
+                                squareManager.setLen(between_finger_tip[0], between_finger_tip[1])
+
+                # 显示方块，传入本实例，主要为了半透明的处理
+                squareManager.display(self)
+
+                # 显示距离
+                cv2.putText(self.image, "dis:" + str(rect_percent_text), (10, 15), cv2.FONT_HERSHEY_PLAIN, 1,
+                            (0, 255, 0), 1)
+
+                # 显示当前激活
+                print(squareManager.active_index, squareManager.active_index)
+                cv2.putText(self.image, "Active:" + (
+                    "0" if squareManager.active_index == -1 else str(squareManager.active_index + 1)), (10, 30),
+                            cv2.FONT_HERSHEY_PLAIN, 1, (0, 255, 0), 1)
+
+                # 显示刷新率FPS
+                cTime = time.time()
+                fps_text = 1 / (cTime - fpsTime)
+                fpsTime = cTime
+                cv2.putText(self.image, "FPS: " + str(int(fps_text)), (10, 45),
+                            cv2.FONT_HERSHEY_PLAIN, 1,(0, 255, 0), 1)
+                # 显示画面
+                # self.image = cv2.resize(self.image, (resize_w//2, resize_h//2))
+                cv2.imshow('virtual drag and drop', self.image)
+
+                if cv2.waitKey(5) & 0xFF == 27 :
+                    break
+            cap.release()
