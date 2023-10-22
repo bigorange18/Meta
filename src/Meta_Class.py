@@ -1,5 +1,6 @@
 import cv2, time
 from src.finger_gesture_drag_block import HandControlVolume
+from src.safe_detect import SafeDetect
 
 class MetaSystem(object):
     '''
@@ -15,8 +16,10 @@ class MetaSystem(object):
         self.status = 0
         self.cameraparam = CameraParam()
         self.mate_0 = HandControlVolume()
+        self.mate_1 = SafeDetect()
         self.RunCase = {
-            0: self.mate_0    
+            0: self.mate_0,  
+            1: self.mate_1  
         }
 
     def _SysCheck(self):
