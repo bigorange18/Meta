@@ -1,7 +1,7 @@
 import os, sys
 import torch
 from pathlib import Path
-from lib.genral import increment_path, select_device
+from lib.general import increment_path, select_device
 
 FILE = Path(__file__).resolve()         # 转为绝对路径
 ROOT = FILE.parents[0]                  # 找到路径
@@ -20,6 +20,7 @@ def detect(
     1、判断输入的是视频还是开启摄像头
     '''
     source = str(source)
+    # 摄像头
     is_cam = source.isnumeric() or source.endswith(".stream")
     # 传入视频是以screen开头
     is_video = source.lower().startswith("screen")
@@ -29,6 +30,12 @@ def detect(
     #gpu
     # device = torch.device("device:0")
     device = select_device(device)
+
+    # 从摄像头参数中获取
+    img_size = (640, 640)
+
+    if is_cam:
+        view_img = 1
 
 
 

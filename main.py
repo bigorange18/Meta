@@ -3,6 +3,7 @@ from src.Meta_Class import MetaSystem
 
 
 def main():
+    # 需要增加log日志
     mateverse = MetaSystem()
     mateverse._SysCheck()
     mateverse.MetaProj()

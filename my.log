@@ -1,0 +1,25 @@
+2023-10-29 10:05:59,047 - DEBUG - This is a debug log.
+2023-10-29 10:05:59,047 - INFO - This is a info log.
+2023-10-29 10:05:59,047 - WARNING - This is a warning log.
+2023-10-29 10:05:59,047 - ERROR - This is a error log.
+2023-10-29 10:05:59,047 - CRITICAL - This is a critical log.
+2023-10-29 10:08:32,363 - DEBUG - This is a debug log.
+2023-10-29 10:08:32,364 - INFO - This is a info log.
+2023-10-29 10:08:32,364 - WARNING - This is a warning log.
+2023-10-29 10:08:32,364 - ERROR - This is a error log.
+2023-10-29 10:08:32,364 - CRITICAL - This is a critical log.
+2023-10-29 10:08:32,364 - DEBUG - This is a debug log.
+2023-10-29 10:08:32,364 - INFO - This is a info log.
+2023-10-29 10:08:32,364 - WARNING - This is a warning log.
+2023-10-29 10:08:32,364 - ERROR - This is a error log.
+2023-10-29 10:08:32,364 - CRITICAL - This is a critical log.
+10/29/2023 10:09:52 AM - DEBUG - This is a debug log.
+10/29/2023 10:09:52 AM - INFO - This is a info log.
+10/29/2023 10:09:52 AM - WARNING - This is a warning log.
+10/29/2023 10:09:52 AM - ERROR - This is a error log.
+10/29/2023 10:09:52 AM - CRITICAL - This is a critical log.
+10/29/2023 10:09:52 AM - DEBUG - This is a debug log.
+10/29/2023 10:09:52 AM - INFO - This is a info log.
+10/29/2023 10:09:52 AM - WARNING - This is a warning log.
+10/29/2023 10:09:52 AM - ERROR - This is a error log.
+10/29/2023 10:09:52 AM - CRITICAL - This is a critical log.
