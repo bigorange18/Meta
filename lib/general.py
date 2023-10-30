@@ -1,6 +1,28 @@
 import os, torch
 from pathlib import Path
 
+
+def check_git_status(repo:str="gitbug1949/virtual", branch:str="master"):
+    """
+    Metaverse
+    检查当前本地仓库与线上分支的提交差异数量
+    """
+    git_url = f"https://github.com/{repo}.git"
+    msg = f", for updates see {git_url}"
+
+    return os.system(f"git ls-remote {repo} {branch}") == 0
+
+
+def get_git_hash():
+    return os.popen
+
+
+
+
+
+
+
+
 def increment_path(path, exist_ok=False, sep='', mkdir=False):
     path = Path(path)
     if path.exists() and not exist_ok:
