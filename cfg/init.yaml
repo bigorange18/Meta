@@ -1,0 +1,9 @@
+git-repo:
+    repo: bigorange18/Meta
+    branch: dev
+
+train:
+    device: cuda
+    batch_size: 16
+    num_workers: 4
+    epochs: 10

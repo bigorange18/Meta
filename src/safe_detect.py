@@ -252,7 +252,5 @@ class SafeDetect:
         cv2.destroyAllWindows()
 
 
-ppe = PPE_detect()            
-ppe.detect()
 
 
