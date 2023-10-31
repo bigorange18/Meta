@@ -1,5 +1,5 @@
 import cv2, time
-import configparser
+import yaml
 from lib.general import check_git_status
 from src.safe_detect import SafeDetect
 from src.finger_gesture_drag_block import HandControlVolume
@@ -12,7 +12,7 @@ class MetaSystem(object):
     2.1、检测相机;
     2.2、提取相机基本参数;
     '''
-    def __init__(self, cfg="./cfg/base.ini") -> None:
+    def __init__(self, cfg="./cfg/init.yaml") -> None:
         """
         status
             0: 系统未开始工作
@@ -24,6 +24,7 @@ class MetaSystem(object):
         # 1.检测本地代码与git仓库代码
         self.MetaDic = dict()
         self.read_cfg(cfg)
+        check_git_status(self.MetaDic["git-repo"]["repo"], self.MetaDic["git-repo"]["branch"])
         self.status = 0
         self.cameraparam = CameraParam()
         self.mate_0      = HandControlVolume()
@@ -80,11 +81,9 @@ class MetaSystem(object):
 
 
     def read_cfg(self, cfg):
-        config = configparser.ConfigParser()
-        config.read(cfg, encoding="utf-8")
-        print(config)
-
-        pass
+        with open(cfg, 'r') as f:
+            dic = yaml.safe_load(f)
+            return self.MetaDic.update(dic)
 
 
 class CameraParam():

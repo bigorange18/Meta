@@ -1,16 +1,27 @@
+import re
 import os, torch
+
 from pathlib import Path
+from subprocess import check_output
 
-
-def check_git_status(repo:str="chenorange2219/Meta", branch:str="master"):
+def check_git_status(repo:str="bigorange18/Meta", branch:str="dev"):
     """
-    Metaverse
+    Meta
     检查当前本地仓库与线上分支的提交差异数量
     """
     git_url = f"https://github.com/{repo}.git"
     msg = f", for updates see {git_url}"
-
-    return os.system(f"git ls-remote {repo} {branch}") == 0
+    assert Path(".git").exists(), "This is not a git repository. You should clone it with --recursive option" + msg
+    splits = re.split(pattern=r'\s', string=check_output("git remote -v", shell=True).decode())
+    remote = splits[0]
+    check_output(f"git fetch {remote}", shell=True, timeout=3)
+    local_branch = check_output("git rev-parse --abbrev-ref HEAD", shell=True).decode().strip()
+    # remote_branch = check_output(f"git rev-parse --abbrev-ref {remote}/{branch}", shell=True).decode().strip()
+    diff_count = check_output(f"git rev-list {local_branch}..{remote}/{branch} --count", shell=True).decode().strip()   
+    if diff_count != "0":
+        print(f"{repo} is {diff_count} commit(s) behind {remote}/{branch}")
+    else:
+        print(f"{repo} is up-to-date with {remote}/{branch}")
 
 
 def get_git_hash():
