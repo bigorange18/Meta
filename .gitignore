@@ -9,7 +9,7 @@
 # 忽略文件夹
 yolov5/
 log/
-!weights
+
 yolov5?.pt
 src/__pycache__
 
