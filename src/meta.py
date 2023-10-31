@@ -1,6 +1,7 @@
 import cv2, time
 import yaml
 from lib.general import check_git_status
+from lib.general import get_camera_status
 from src.safe_detect import SafeDetect
 from src.finger_gesture_drag_block import HandControlVolume
 
@@ -25,8 +26,8 @@ class MetaSystem(object):
         self.MetaDic = dict()
         self.read_cfg(cfg)
         check_git_status(self.MetaDic["git-repo"]["repo"], self.MetaDic["git-repo"]["branch"])
+        self.cameraparam = get_camera_status()
         self.status = 0
-        self.cameraparam = CameraParam()
         self.mate_0      = HandControlVolume()
         self.mate_1      = SafeDetect()
         self.RunCase = {
@@ -86,8 +87,3 @@ class MetaSystem(object):
             return self.MetaDic.update(dic)
 
 
-class CameraParam():
-    def __init__(self) -> None:
-        self.img_width = 0
-        self.img_high = 0
-        self.hz        = 0    

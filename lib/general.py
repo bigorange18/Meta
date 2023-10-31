@@ -1,8 +1,10 @@
 import re
 import os, torch
+import cv2
 
 from pathlib import Path
 from subprocess import check_output
+from lib.classes import Camera
 
 def check_git_status(repo:str="bigorange18/Meta", branch:str="dev"):
     """
@@ -23,10 +25,19 @@ def check_git_status(repo:str="bigorange18/Meta", branch:str="dev"):
     else:
         print(f"{repo} is up-to-date with {remote}/{branch}")
 
-
-def get_git_hash():
-    return os.popen
-
+def get_camera_status(camera="0"):
+    """
+    获取相机参数
+    """
+    cap = cv2.VideoCapture(camera)
+    if not cap.isOpened():
+        raise IOError("Cannot open webcam")
+    cam = Camera()
+    cam.width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+    cam.height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+    cam.fps = cap.get(cv2.CAP_PROP_FPS)
+    cap.release()
+    return cam
 
 
 
