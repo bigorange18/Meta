@@ -1,0 +1,18 @@
+# 不能忽略文件
+!cfg
+!lib
+!model
+!src
+!utils
+
+
+# 忽略文件夹
+yolov5/
+log/
+!weights
+yolov5?.pt
+src/__pycache__
+
+__pycache__/
+*.py[cod]
+*$py.class

@@ -58,7 +58,7 @@ def increment_path(path, exist_ok=False, sep='', mkdir=False):
             path.mkdir(parents=True, exist_ok=True)
     return path
 
-def select_device(device="", batch_size=0, newline=True):
+def select_device(device="", batch_size=2, newline=True):
     # f'YOLOv5 🚀 {git_describe() or file_date()}
     device = str(device).strip().lower().replace("cuda:", "").replace("none", "")
     cpu = device == "cup"
