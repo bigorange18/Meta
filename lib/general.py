@@ -2,7 +2,7 @@ import os, torch
 from pathlib import Path
 
 
-def check_git_status(repo:str="gitbug1949/virtual", branch:str="master"):
+def check_git_status(repo:str="chenorange2219/Meta", branch:str="master"):
     """
     Metaverse
     检查当前本地仓库与线上分支的提交差异数量

@@ -1,5 +1,5 @@
 import os, sys
-from src.Meta_Class import MetaSystem
+from src.meta import MetaSystem
 
 
 def main():

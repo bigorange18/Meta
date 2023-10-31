@@ -1,22 +1,33 @@
 import cv2, time
-from src.finger_gesture_drag_block import HandControlVolume
+import configparser
+from lib.general import check_git_status
 from src.safe_detect import SafeDetect
+from src.finger_gesture_drag_block import HandControlVolume
 
 class MetaSystem(object):
     '''
-    status
-        0: 系统未开始工作
-        1: 系统进入自检状态
-        2: 系统状态无问题
-        3: 系统进入工作状态
-        4: 
-    
+    1、读取cfg文件
+    1、检查本地代码与git仓库代码相差几个commit
+    2、初始化系统工作状态;
+    2.1、检测相机;
+    2.2、提取相机基本参数;
     '''
-    def __init__(self) -> None:
+    def __init__(self, cfg="./cfg/base.ini") -> None:
+        """
+        status
+            0: 系统未开始工作
+            1: 系统进入自检状态
+            2: 系统状态无问题
+            3: 系统进入工作状态
+            4: 
+        """
+        # 1.检测本地代码与git仓库代码
+        self.MetaDic = dict()
+        self.read_cfg(cfg)
         self.status = 0
         self.cameraparam = CameraParam()
-        self.mate_0 = HandControlVolume()
-        self.mate_1 = SafeDetect()
+        self.mate_0      = HandControlVolume()
+        self.mate_1      = SafeDetect()
         self.RunCase = {
             0: self.mate_0,  
             1: self.mate_1  
@@ -66,6 +77,14 @@ class MetaSystem(object):
     def MetaRun(self):
         print("111")
         self.mate_0.Run()
+
+
+    def read_cfg(self, cfg):
+        config = configparser.ConfigParser()
+        config.read(cfg, encoding="utf-8")
+        print(config)
+
+        pass
 
 
 class CameraParam():
