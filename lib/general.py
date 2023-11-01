@@ -1,7 +1,7 @@
 import re
 import os, torch
 import cv2
-
+import platform
 from pathlib import Path
 from subprocess import check_output
 from lib.classes import Camera
@@ -54,12 +54,13 @@ def increment_path(path, exist_ok=False, sep='', mkdir=False):
             if not os.path.exists(cur_path):
                 break
         path = Path(cur_path)
-        if mkdir:
-            path.mkdir(parents=True, exist_ok=True)
+    if mkdir:
+        path.mkdir(parents=True, exist_ok=True)
     return path
 
-def select_device(device="", batch_size=2, newline=True):
+def select_device(device="", batch_size=0, newline=True):
     # f'YOLOv5 🚀 {git_describe() or file_date()}
+    info = f"Python-{platform.python_version()} torch-{torch.__version__} " 
     device = str(device).strip().lower().replace("cuda:", "").replace("none", "")
     cpu = device == "cup"
     mps = device == "mps"
@@ -74,20 +75,20 @@ def select_device(device="", batch_size=2, newline=True):
             n = len(devices)  # device count
             if n > 1 and batch_size > 0:  # check batch_size is divisible by device_count
                 assert batch_size % n == 0, f'batch-size {batch_size} not multiple of GPU count {n}'
-            space = ' ' * (len(s) + 1)
+            space = ' ' * (len(info) + 1)
             for i, d in enumerate(devices):
                 p = torch.cuda.get_device_properties(i)
-                s += f"{'' if i == 0 else space}CUDA:{d} ({p.name}, {p.total_memory / (1 << 20):.0f}MiB)\n"  # bytes to MB
+                info += f"{'' if i == 0 else space}CUDA:{d} ({p.name}, {p.total_memory / (1 << 20):.0f}MiB)\n"  # bytes to MB
             arg = 'cuda:0'
         elif mps and getattr(torch, 'has_mps', False) and torch.backends.mps.is_available():  # prefer MPS if available
-            s += 'MPS\n'
+            info += 'MPS\n'
             arg = 'mps'
         else:  # revert to CPU
-            s += 'CPU\n'
+            info += 'CPU\n'
             arg = 'cpu'
 
         if not newline:
-            s = s.rstrip()
+            info = info.rstrip()
         # LOGGER.info(s)
         return torch.device(arg)
 
@@ -125,4 +126,5 @@ def check_img_size(img_size, s=32, floor=0):
             img_size[1] = [img_size[1], img_size[1]]
     return max(img_size[0][0], img_size[1][0]) >= s and max(img_size[0][1], img_size[1][1]) >= s and max
 
-print(auto_download("yolov5s.pt"))
+def check_dataset(data, autodownload=True):
+    
