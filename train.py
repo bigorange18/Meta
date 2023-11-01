@@ -3,10 +3,12 @@ import argparse
 import sys
 import os
 import yaml
+import torch
 from pathlib import Path
 from lib.general import check_git_status
 from lib.general import select_device
 from lib.general import increment_path
+from lib.general import check_suffix
 from ultralytics.utils.checks import check_requirements
 
 FILE = Path(__file__).resolve()     # 返回路径当前工作目录路径  .absolute()绝对
@@ -34,7 +36,12 @@ def train(hyp, opt, device):
 
     # Save run settings
 
+    # Model
+    check_suffix(weights, '.pt')
 
+    #weights =  
+    ckpt = torch.load(weights, map_location='cpu')
+    
 
 
 
