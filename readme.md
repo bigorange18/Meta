@@ -1,3 +1,4 @@
+[![Readme Card](https://github-readme-stats.vercel.app/api/pin/?username=bigorange18&repo=Meta)](https://github.com/bigorange18/Meta)
 # 元宇宙
 
 ​	是个人项目，该项目目标是通制作一款通过手势操纵英雄带怪升级。目前处于研发阶段，已经实现了手势拖动方块、人脸检测，后续会新增ui界面、各种英雄、野怪。
