@@ -13,6 +13,8 @@ log/
 weights/
 yolov5?.pt
 src/__pycache__
+lib/__pycache__
+windows/__pycache__
 
 __pycache__/
 *.py[cod]
