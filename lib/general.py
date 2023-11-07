@@ -3,6 +3,7 @@ import os, torch
 import cv2
 import platform
 import time
+import math
 from pathlib import Path
 from subprocess import check_output
 from lib.classes import Camera
@@ -338,3 +339,11 @@ def attempt_download(file, repo='ultralytics/yolov5', release='v7.0'):
                           error_msg=f'{file} missing, try downloading from https://github.com/{repo}/releases/{tag}')
 
     return str(file)
+
+
+
+def make_divisible(x, divisor):
+    # Returns nearest x divisible by divisor
+    if isinstance(divisor, torch.Tensor):
+        divisor = int(divisor.max())  # to int
+    return math.ceil(x / divisor) * divisor

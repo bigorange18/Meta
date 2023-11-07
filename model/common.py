@@ -1,6 +1,26 @@
+import json
+import math
+import platform
+import warnings
+from collections import OrderedDict, namedtuple
+from copy import copy
+from pathlib import Path
+
+import cv2
+import numpy as np
+import pandas as pd
+import requests
 import torch
-from torch.nn import nn
-from lib.general import auto_download
+import torch.nn as nn
+import yaml
+from PIL import Image
+from torch.cuda import amp
+
+# from utils.datasets import exif_transpose, letterbox
+from lib.general import (check_requirements, check_suffix, check_version, colorstr, increment_path,
+                           make_divisible, non_max_suppression, scale_coords, xywh2xyxy, xyxy2xywh)
+from utils.plots import Annotator, colors, save_one_box
+from utils.torch_utils import copy_attr, time_sync
 
 class DetectMultiBackend(nn.Module):
     def __init__(self,weights="./weights/yolov5s.pt", device=torch.device("cpu"), dnn=False, data=None, fp16=False, fuse=True):
@@ -40,7 +60,11 @@ class Ensemble(nn.ModuleList):
     
 
 
-
+def autopad(k, p=None):  # kernel, padding
+    # Pad to 'same'
+    if p is None:
+        p = k // 2 if isinstance(k, int) else (x // 2 for x in k)  # auto-pad
+    return p
 
 class Conv(nn.Module):
     # Standard convolution with args(ch_in, ch_out, kernel, stride, padding, groups, dilation, activation)
@@ -310,6 +334,31 @@ class Concat(nn.Module):
 
     def forward(self, x):
         return torch.cat(x, self.d)
+
+class MixConv2d(nn.Module):
+    # Mixed Depth-wise Conv https://arxiv.org/abs/1907.09595
+    def __init__(self, c1, c2, k=(1, 3), s=1, equal_ch=True):  # ch_in, ch_out, kernel, stride, ch_strategy
+        super().__init__()
+        n = len(k)  # number of convolutions
+        if equal_ch:  # equal c_ per group
+            i = torch.linspace(0, n - 1E-6, c2).floor()  # c2 indices
+            c_ = [(i == g).sum() for g in range(n)]  # intermediate channels
+        else:  # equal weight.numel() per group
+            b = [c2] + [0] * n
+            a = np.eye(n + 1, n, k=-1)
+            a -= np.roll(a, 1, axis=1)
+            a *= np.array(k) ** 2
+            a[0] = 1
+            c_ = np.linalg.lstsq(a, b, rcond=None)[0].round()  # solve for equal weight indices, ax = b
+
+        self.m = nn.ModuleList([
+            nn.Conv2d(c1, int(c_), k, s, k // 2, groups=math.gcd(c1, int(c_)), bias=False) for k, c_ in zip(k, c_)])
+        self.bn = nn.BatchNorm2d(c2)
+        self.act = nn.SiLU()
+
+    def forward(self, x):
+        return self.act(self.bn(torch.cat([m(x) for m in self.m], 1)))
+
 
 
 class DetectMultiBackend(nn.Module):
