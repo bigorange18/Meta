@@ -9,6 +9,8 @@ from lib.general import check_git_status
 from lib.general import select_device
 from lib.general import increment_path
 from lib.general import check_suffix
+from lib.general import auto_download
+from model.yolo import Mo
 from ultralytics.utils.checks import check_requirements
 
 FILE = Path(__file__).resolve()     # 返回路径当前工作目录路径  .absolute()绝对
@@ -38,6 +40,12 @@ def train(hyp, opt, device):
 
     # Model
     check_suffix(weights, '.pt')
+    pretrained = weights.endswith('.pt')
+    if pretrained:
+
+        weights = auto_download(weights)
+        ckpt = torch.load(weights, map_location='cpu')
+        model = 
 
     #weights =  
     ckpt = torch.load(weights, map_location='cpu')

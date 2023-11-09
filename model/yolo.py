@@ -1,34 +1,8 @@
-
+from copy import deepcopy
 from pathlib import Path
 from model.common import *
 from lib.general import make_divisible
 
-class DetectionModel():
-    """检测模型"""
-    def __init__(self, cfg='yolov5s.yaml', ch=3, nc=None, anchors=None) -> None:
-        """
-        cfg:配置文件
-        ch: 图片通道数
-        nc:
-        anchors:
-        """
-        # 1、读取配置文件
-        if isinstance(cfg, dict):
-            self.yaml = cfg
-        else:
-            import yaml
-            self.yaml_file = Path(cfg).name
-            with open(cfg, encoding='ascii', errors='ignore') as f:
-                self.yaml = yaml.safe_load(f)
-        # 2、定义模型
-        ch = self.yaml['ch'] = self.yaml.get('ch', ch)
-        if nc and nc != self.yaml['nc']:
-            print('Overriding model.yaml nc with nc=%g as specified in %s' % (nc, cfg))
-            self.yaml['nc'] = nc
-        if anchors:
-            print('Overriding model.yaml anchors with anchors=%s as specified in %s' % (anchors, cfg))
-            self.yaml['anchors'] = round(anchors)
-        
 
 
 
@@ -89,7 +63,35 @@ class Detect(nn.Module):
 
 
 
-
+class Model(nn.Module):
+    def __init__(self, cfg='yolov5s.yaml', ch=3, nc=None, anchors=None) -> None:
+        """
+        cfg:配置文件
+        ch: 图片通道数
+        nc:
+        anchors:
+        """
+        # 1、读取配置文件
+        if isinstance(cfg, dict):
+            self.yaml = cfg
+        else:
+            import yaml
+            self.yaml_file = Path(cfg).name
+            with open(cfg, encoding='ascii', errors='ignore') as f:
+                self.yaml = yaml.safe_load(f)
+        # 2、定义模型
+        # 输入通道数
+        ch = self.yaml['ch'] = self.yaml.get('ch', ch)
+        if nc and nc != self.yaml['nc']:
+            print('Overriding model.yaml nc with nc=%g as specified in %s' % (nc, cfg))
+            self.yaml['nc'] = nc
+        if anchors:
+            print('Overriding model.yaml anchors with anchors=%s as specified in %s' % (anchors, cfg))
+            self.yaml['anchors'] = round(anchors)
+        self.model, self.save = parse_model(deepcopy(self.yaml), ch=[ch])  # model, savelist:[4, 6, 10, 14, 17, 20, 23]
+        self.names = [str(i) for i in range(self.yaml['nc'])]  # default names
+        self.inplace = self.yaml.get('inplace', True)
+        
 
 
 
