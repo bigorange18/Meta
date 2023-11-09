@@ -5,19 +5,73 @@
 !src
 !utils
 !.vscode
+!setup.cfg
+!cfg/yolov3*.cfg
+!data/*.yaml
+!data/hyps
+!data/scripts
+!data/images
+!data/images/zidane.jpg
+!data/images/bus.jpg
+!data/*.sh
+
+# 忽略文件
+*.jpg
+*.jpeg
+*.png
+*.bmp
+*.tif
+*.tiff
+*.heic
+*.JPG
+*.JPEG
+*.PNG
+*.BMP
+*.TIF
+*.TIFF
+*.HEIC
+*.mp4
+*.mov
+*.MOV
+*.avi
+*.data
+*.json
+*.cfg
 
 # 忽略文件夹
+runs/*
+data/*
 dataset/
-yolov5/
+data/images/*
+
+
+coco/
+coco128/
+VOC/
 log/
 weights/
 yolov5?.pt
-src/__pycache__
-lib/__pycache__
-windows/__pycache__
+
+
+# Neural Network weights -----------------------------------------------------------------------------------------------
+*.weights
+*.pt
+*.pb
+*.onnx
+*.engine
+*.mlmodel
+*.torchscript
+*.tflite
+*.h5
+
 weights/*.pt
 *.pt
 
+
+# 调试缓存
+src/__pycache__
+lib/__pycache__
+windows/__pycache__
 __pycache__/
 *.py[cod]
 *$py.class

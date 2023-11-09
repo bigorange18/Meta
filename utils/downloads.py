@@ -43,7 +43,26 @@ def safe_download(file, url, url2=None, min_bytes=1E0, error_msg=''):
         LOGGER.info('')
 
 
-def attempt_download(file, repo='ultralytics/yolov5', release='latest'):
+
+def attempt_download(weight:str="weights/yolov5s.pt", repo:str="bigorange18", release:str="v1.2"):
+    """
+    1、判断权重文件是否存在
+    从git中下载权重文件
+    """
+    #https://github.com/bigorange18/Meta/releases/download/v1.2/datasets.zip
+    w = Path(weight)
+    if not w.exists():
+        url = f"https://github.com/{repo}/Meta/releases/tag/{release}/{w.name}"
+        weight_path = "./weights/" + weight
+        torch.hub.download_url_to_file(url, weight )
+        assert os.path.exists(weight), f"{weight} not found"
+    
+    return str(weight)
+
+
+
+
+def attempt_download1(file:str="yolov5s.pt", repo='ultralytics/yolov5', release='latest'):
     # Attempt file download from GitHub release assets if not found locally
     from utils.general import LOGGER
 
