@@ -20,9 +20,20 @@ from qtmodern import styles, windows
 class MainWindow(QWidget, Ui_Dialog):
     def __init__(self, win_width=500):
         super().__init__()
+        # 设置窗口标题
+        self.setWindowTitle("登录界面")
         # 设置窗口大小
         self.setFixedSize(win_width, int(win_width*0.75))
-        self.move(1000, 200)
+        # 调整窗口位置
+        qr = self.frameGeometry()
+        screen_w = QApplication.primaryScreen().size().width()
+        screen_h = QApplication.primaryScreen().size().height()
+        w_x = (screen_w - win_width) / 2
+        w_y = (screen_h - win_width*0.75) / 2
+        self.move(w_x, w_y)
+
+
+        # self.move(1000, 200)
         # 
         # self.setStyleSheet("background: rgb(132, 189, 179);")
 
