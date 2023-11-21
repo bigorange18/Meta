@@ -12,8 +12,7 @@ from PySide6.QtGui import QCursor
 from PySide6.QtCore import Qt
 # 导入我们生成的界面
 from untitled_ui import Ui_Dialog
- 
-import qtmodern.styles
+
 from qtmodern import styles, windows
 
 # 继承QWidget类，以获取其属性和方法
