@@ -69,3 +69,4 @@ if __name__ == "__main__":
     window.show() 
     # 结束QApplication
     sys.exit(app.exec_())
+    
