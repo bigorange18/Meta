@@ -11,18 +11,19 @@ from PySide6.QtWidgets import QMainWindow, QDialog, QLabel, QPushButton, QLineEd
 from PySide6.QtGui import QCursor
 from PySide6.QtCore import Qt
 # 导入我们生成的界面
-from untitled_ui import Ui_Dialog
+from login import LoginUi
 
 from qtmodern import styles, windows
 
 # 继承QWidget类，以获取其属性和方法
-class MainWindow(QWidget, Ui_Dialog):
+class MainWindow(QWidget, LoginUi):
     def __init__(self, win_width=500):
         super().__init__()
         # 设置窗口标题
         self.setWindowTitle("登录界面")
         # 设置窗口大小
-        self.setFixedSize(win_width, int(win_width*0.75))
+        # self.setFixedSize(win_width, int(win_width*0.75))
+        # self.resize(win_width, int(win_width*0.75))
         # 调整窗口位置
         qr = self.frameGeometry()
         screen_w = QApplication.primaryScreen().size().width()
@@ -40,21 +41,28 @@ class MainWindow(QWidget, Ui_Dialog):
         self.setupUi(self)
 
         # 给登录按钮增加属性
-        self.pushButton.setCursor(QCursor(Qt.PointingHandCursor))
-        self.pushButton.setStyleSheet(
-            "*{border: 4px solid '#BC006C;" +
-            "border-radius: 45px;" +
-            "font-size: 35px;" + 
-            "color: 'white';" + 
-            "padding: 25px 0;" + 
-            "margin: 100px 200px;}" +
-            "*:hover{background: '#BC006C'};")
-        # self.pushButton.clicked.connect(self.on_botton_clicked)
-        # self.show()
+        # self.login_button.setCursor(QCursor(Qt.PointingHandCursor))
+        # self.login_button.setStyleSheet(
+        #     "*{border: 4px solid '#BC006C;" +
+        #     "border-radius: 45px;" +
+        #     "font-size: 35px;" + 
+        #     "color: 'white';" + 
+        #     "padding: 25px 0;" + 
+        #     "margin: 100px 200px;}" +
+        #     "*:hover{background: '#BC006C'};")
+        self.login_button.clicked.connect(self.login_botton_clicked)
+        self.show()
 
-    def on_botton_clicked(self):
-        msg = QMessageBox.clickedButton(QMessageBox(), "提示确定")
+    
+
+
+    def login_botton_clicked(self):
+        msg = QMessageBox.clickedButton(QMessageBox())
         print("button clicked")
+
+    def on_button_2_clicked(self):
+        print("取消登录")
+        # return super().on_button_2_clicked()
 
 # 程序入口
 if __name__ == "__main__":
@@ -64,8 +72,6 @@ if __name__ == "__main__":
     # qtmodern.styles.dark(app)
     # 初始化并展示我们的界面组件
     window = MainWindow()
-    # window.show()
-    # win = qtmodern.windows.ModernWindow(window)
     window.show() 
     # 结束QApplication
     sys.exit(app.exec_())
