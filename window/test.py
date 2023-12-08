@@ -11,12 +11,11 @@ from PySide6.QtWidgets import QMainWindow, QDialog, QLabel, QPushButton, QLineEd
 from PySide6.QtGui import QCursor
 from PySide6.QtCore import Qt
 # 导入我们生成的界面
-from login import LoginUi
-
-from qtmodern import styles, windows
+from login_ui import Ui_Dialog
+from MateWin_ui import Ui_MainWindow
 
 # 继承QWidget类，以获取其属性和方法
-class MainWindow(QWidget, LoginUi):
+class MainWindow(QWidget, Ui_Dialog):
     def __init__(self, win_width=500):
         super().__init__()
         # 设置窗口标题
@@ -51,18 +50,31 @@ class MainWindow(QWidget, LoginUi):
         #     "margin: 100px 200px;}" +
         #     "*:hover{background: '#BC006C'};")
         self.login_button.clicked.connect(self.login_botton_clicked)
-        self.show()
-
-    
+        # self.show()
 
 
     def login_botton_clicked(self):
         msg = QMessageBox.clickedButton(QMessageBox())
+        username = self.login_name.text().strip()
+        password = self.login_password.text().strip()
+        print(username, password)
         print("button clicked")
 
-    def on_button_2_clicked(self):
-        print("取消登录")
-        # return super().on_button_2_clicked()
+        matewin = MainWindow1()
+        matewin.show()
+        self.close()
+        # 清空密码
+        self.login_password.setText("")
+
+
+
+class MainWindow1( Ui_MainWindow):
+    def __init__(self, parent=None):
+        super().__init__()
+        # 设置窗口标题
+
+        pass
+
 
 # 程序入口
 if __name__ == "__main__":
@@ -74,5 +86,5 @@ if __name__ == "__main__":
     window = MainWindow()
     window.show() 
     # 结束QApplication
-    sys.exit(app.exec_())
+    sys.exit(app.exec())
     
