@@ -1,5 +1,5 @@
 import sys
-from PySide6.QtWidgets import QApplication, QWidget,QMessageBox
+from PySide6.QtWidgets import QApplication, QWidget,QMessageBox,QMainWindow,QFileDialog,QDialog
 from PySide6.QtWidgets import QMainWindow, QDialog, QLabel, QPushButton, QLineEdit
 from PySide6.QtGui import QCursor
 from PySide6.QtCore import Qt
@@ -19,9 +19,11 @@ class LoginWindow(QWidget, Ui_Dialog):
         qr = self.frameGeometry()
         screen_w = QApplication.primaryScreen().size().width()
         screen_h = QApplication.primaryScreen().size().height()
-        w_x = (screen_w - win_width) / 2
-        w_y = (screen_h - win_width*0.75) / 2
-        self.move(w_x, w_y)
+        win_w = self.frameGeometry().getRect()[2]
+        win_h = self.frameGeometry().getRect()[3]
+        self.win_x = (screen_w - win_w) / 2
+        self.win_y = (screen_h - win_h) / 2
+        self.move(self.win_x, self.win_y)
         self.setupUi(self)
         # 登录
         self.login_button.clicked.connect(self.login_botton_clicked)
@@ -50,6 +52,13 @@ class MateWindow(QMainWindow,Ui_MainWindow):
     '''Meta处理窗口'''
     def __init__(self, parent=None):
         super().__init__()
+        screen_w = QApplication.primaryScreen().size().width()
+        screen_h = QApplication.primaryScreen().size().height()
+        win_w = self.frameGeometry().getRect()[2]
+        win_h = self.frameGeometry().getRect()[3]
+        self.win_x = (screen_w - win_w) / 2
+        self.win_y = (screen_h - win_h) / 2
+        self.move(self.win_x, self.win_y)
         self.setupUi(self)
         self.actionExit.triggered.connect(self.back2login)
         self.show()
