@@ -1,5 +1,5 @@
 import sys
-from PySide6.QtWidgets import QApplication, QWidget,QMessageBox,QMainWindow,QFileDialog,QDialog
+from PySide6.QtWidgets import QApplication, QWidget,QMessageBox,QMainWindow,QFileDialog,QDialog,QScrollArea,QLabel
 from PySide6.QtWidgets import QMainWindow, QDialog, QLabel, QPushButton, QLineEdit
 from PySide6.QtGui import QCursor
 from PySide6.QtCore import Qt
@@ -31,6 +31,7 @@ class LoginWindow(QWidget, Ui_Dialog):
         self.login_fail.clicked.connect(self.closewin)
 
     def login_botton_clicked(self):
+        #! todo
         msg = QMessageBox.clickedButton(QMessageBox())
         username = self.login_name.text().strip()
         password = self.login_password.text().strip()
@@ -46,8 +47,6 @@ class LoginWindow(QWidget, Ui_Dialog):
     def closewin(self):
         return self.close()
 
-
-
 class MateWindow(QMainWindow,Ui_MainWindow):
     '''Meta处理窗口'''
     def __init__(self, parent=None):
@@ -60,14 +59,31 @@ class MateWindow(QMainWindow,Ui_MainWindow):
         self.win_y = (screen_h - win_h) / 2
         self.move(self.win_x, self.win_y)
         self.setupUi(self)
+
+        self.msg_1 = []
+        # self.label_show.setText("")
+        # self.label_show.setStyleSheet("background-color: yellow; color: black")
+        self.scorll_msg = QScrollArea()
+        self.scorll_msg.setWidget(self.label_show)
+        self.pushButton_1.clicked.connect(self.msg_print)
         self.actionExit.triggered.connect(self.back2login)
         self.show()
 
     def back2login(self):
         print("button clicked")
         self.close()
-        Wins.LoginWin.show()
+        # Wins.LoginWin.show()
 
+
+    def msg_print(self):
+        for i in range(100):
+            self.msg_1.append(1)
+        print(self.msg_1)
+        self.label_show.setText(str(self.msg_1))
+        self.label_show.repaint()
+        self.label_show.setText("1111112")
+
+        pass
 
 
 # 程序入口
@@ -77,7 +93,7 @@ if __name__ == "__main__":
     
     # qtmodern.styles.dark(app)
     # 初始化并展示我们的界面组件
-    Wins.LoginWin = LoginWindow()
+    Wins.LoginWin = MateWindow()
     Wins.LoginWin.show() 
     # 结束QApplication
     sys.exit(app.exec())
