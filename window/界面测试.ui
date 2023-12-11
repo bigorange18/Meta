@@ -1,196 +1,68 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>MainWindow</class>
- <widget class="QMainWindow" name="MainWindow">
+ <class>ImageProcessor</class>
+ <widget class="QMainWindow" name="ImageProcessor">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>400</width>
+    <height>300</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
-  </property>
-  <property name="iconSize">
-   <size>
-    <width>64</width>
-    <height>64</height>
-   </size>
-  </property>
-  <property name="toolButtonStyle">
-   <enum>Qt::ToolButtonIconOnly</enum>
-  </property>
-  <property name="animated">
-   <bool>true</bool>
+   <string>Image Processor</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QLabel" name="label">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>30</y>
-      <width>791</width>
-      <height>71</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-    <property name="pixmap">
-     <pixmap>icon/2.jpg</pixmap>
-    </property>
-    <property name="scaledContents">
-     <bool>true</bool>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignBottom|Qt::AlignHCenter</set>
-    </property>
-    <property name="wordWrap">
-     <bool>true</bool>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="lineEdit">
-    <property name="geometry">
-     <rect>
-      <x>130</x>
-      <y>0</y>
-      <width>113</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="placeholderText">
-     <string extracomment="111">请输入用户名</string>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="lineEdit_2">
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QLabel" name="imageLabel">
+      <property name="text">
+       <string/>
+      </property>
+      <property name="pixmap">
+       <pixmap/>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="loadButton">
+      <property name="text">
+       <string>Load Image</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="grayscaleButton">
+      <property name="text">
+       <string>Convert to Grayscale</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="saveButton">
+      <property name="text">
+       <string>Save Image</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <menubar>
+   <widget class="QMenuBar" name="menubar">
     <property name="geometry">
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>113</width>
-      <height>21</height>
+      <width>400</width>
+      <height>26</height>
      </rect>
     </property>
-    <property name="font">
-     <font>
-      <family>AniMe Matrix - MB_EN</family>
-      <pointsize>10</pointsize>
-      <bold>false</bold>
-     </font>
-    </property>
-    <property name="text">
-     <string>满园春色关不住</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
-    </property>
-    <property name="readOnly">
-     <bool>true</bool>
-    </property>
    </widget>
-   <widget class="QSpinBox" name="spinBox">
-    <property name="geometry">
-     <rect>
-      <x>270</x>
-      <y>160</y>
-      <width>71</width>
-      <height>22</height>
-     </rect>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-    </property>
-    <property name="suffix">
-     <string>m/s</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButton">
-    <property name="geometry">
-     <rect>
-      <x>100</x>
-      <y>310</y>
-      <width>75</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>登录</string>
-    </property>
-    <property name="icon">
-     <iconset theme="accessories-character-map"/>
-    </property>
-    <property name="autoDefault">
-     <bool>true</bool>
-    </property>
-    <property name="default">
-     <bool>false</bool>
-    </property>
-    <property name="flat">
-     <bool>false</bool>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButton_2">
-    <property name="geometry">
-     <rect>
-      <x>270</x>
-      <y>310</y>
-      <width>75</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>注册</string>
-    </property>
-   </widget>
-   <widget class="QToolButton" name="toolButton">
-    <property name="geometry">
-     <rect>
-      <x>80</x>
-      <y>140</y>
-      <width>71</width>
-      <height>61</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>菜单</string>
-    </property>
-    <property name="icon">
-     <iconset>
-      <normaloff>icon/菜单.png</normaloff>icon/菜单.png</iconset>
-    </property>
-    <property name="iconSize">
-     <size>
-      <width>32</width>
-      <height>32</height>
-     </size>
-    </property>
-    <property name="popupMode">
-     <enum>QToolButton::InstantPopup</enum>
-    </property>
-    <property name="toolButtonStyle">
-     <enum>Qt::ToolButtonTextBesideIcon</enum>
-    </property>
-    <property name="autoRaise">
-     <bool>false</bool>
-    </property>
-    <property name="arrowType">
-     <enum>Qt::NoArrow</enum>
-    </property>
-   </widget>
-  </widget>
-  <widget class="QMenuBar" name="menubar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>800</width>
-     <height>21</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QStatusBar" name="statusbar"/>
+  </menubar>
+  <statusbar>
+   <widget class="QStatusBar" name="statusbar"/>
+  </statusbar>
  </widget>
  <resources/>
  <connections/>

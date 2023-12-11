@@ -1,12 +1,13 @@
 import sys
 from PySide6.QtWidgets import QApplication, QWidget,QMessageBox,QMainWindow,QFileDialog,QDialog,QScrollArea,QLabel
 from PySide6.QtWidgets import QMainWindow, QDialog, QLabel, QPushButton, QLineEdit
-from PySide6.QtGui import QCursor
+from PySide6.QtGui import QCursor, QPixmap
 from PySide6.QtCore import Qt
 from PySide6.QtUiTools import QUiLoader
 from login_ui import Ui_Dialog
 from MateWin_ui import Ui_MainWindow
 from all_win import Wins
+import cv2
 
 # 继承QWidget类，以获取其属性和方法
 class LoginWindow(QWidget, Ui_Dialog):
@@ -25,6 +26,10 @@ class LoginWindow(QWidget, Ui_Dialog):
         self.win_y = (screen_h - win_h) / 2
         self.move(self.win_x, self.win_y)
         self.setupUi(self)
+
+
+
+
         # 登录
         self.login_button.clicked.connect(self.login_botton_clicked)
         # 取消
@@ -44,6 +49,14 @@ class LoginWindow(QWidget, Ui_Dialog):
         # 清空密码
         self.login_password.setText("")
 
+
+    def loadVideo(self):
+
+        # self.player.setMedia(QMediaContent(QFileDialog.getOpenFileUrl()[0])) # 选取视频文件
+        pass
+
+
+
     def closewin(self):
         return self.close()
 
@@ -61,12 +74,13 @@ class MateWindow(QMainWindow,Ui_MainWindow):
         self.setupUi(self)
 
         self.msg_1 = []
-        # self.label_show.setText("")
+        # self.label_show.setText("111")
         # self.label_show.setStyleSheet("background-color: yellow; color: black")
-        self.scorll_msg = QScrollArea()
-        self.scorll_msg.setWidget(self.label_show)
-        self.pushButton_1.clicked.connect(self.msg_print)
-        self.actionExit.triggered.connect(self.back2login)
+        # self.scorll_msg = QScrollArea()
+        # self.scorll_msg.setWidget(self.label)
+        # self.pushButton_1.clicked.connect(self.msg_print)
+        # self.actionExit.triggered.connect(self.back2login)
+        self.file_name.clicked.connect(self.select_file)
         self.show()
 
     def back2login(self):
@@ -79,11 +93,27 @@ class MateWindow(QMainWindow,Ui_MainWindow):
         for i in range(100):
             self.msg_1.append(1)
         print(self.msg_1)
-        self.label_show.setText(str(self.msg_1))
-        self.label_show.repaint()
-        self.label_show.setText("1111112")
+        self.label.setText(str(self.msg_1))
+        self.label.repaint()
+        # self.label.setText("1111112")
 
         pass
+
+    def palyvideo(self):
+        pass
+
+
+    def select_file(self):
+        self.file_path, _ = QFileDialog.getOpenFileName(self,dir="./Mate/img", filter="*.jpg; *.png; *.jpeg")
+        # self.file_path, _ = QFileDialog.getOpenFileName(self, '选择文件', './', 'All Files (*);;Text Files (*.txt)')
+        print(self.file_path)
+        if self.file_path:
+            self.file_show.setPixmap(QPixmap(self.file_path))
+        # self.label_show.setText(self.file_path)
+        # self.label_show.setStyleSheet("background-color: yellow; color: black")
+
+
+
 
 
 # 程序入口
@@ -93,7 +123,7 @@ if __name__ == "__main__":
     
     # qtmodern.styles.dark(app)
     # 初始化并展示我们的界面组件
-    Wins.LoginWin = MateWindow()
+    Wins.LoginWin = LoginWindow()
     Wins.LoginWin.show() 
     # 结束QApplication
     sys.exit(app.exec())

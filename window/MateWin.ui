@@ -6,97 +6,140 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>1600</width>
+    <height>1000</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>1600</width>
+    <height>1000</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>1600</width>
+    <height>1000</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>MateWin</string>
   </property>
   <property name="windowIcon">
    <iconset>
-    <normaloff>C:/Users/Administrator/.designer/backup/icon/win1.png</normaloff>C:/Users/Administrator/.designer/backup/icon/win1.png</iconset>
+    <normaloff>C:/Users/Administrator/.designer/backup/icon/Mate.png</normaloff>C:/Users/Administrator/.designer/backup/icon/Mate.png</iconset>
   </property>
   <property name="toolButtonStyle">
    <enum>Qt::ToolButtonTextOnly</enum>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QListView" name="funcion">
+   <widget class="QPushButton" name="button_filename">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>10</y>
-      <width>221</width>
-      <height>491</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label">
-    <property name="geometry">
-     <rect>
-      <x>50</x>
-      <y>20</y>
-      <width>101</width>
-      <height>16</height>
+      <x>840</x>
+      <y>650</y>
+      <width>391</width>
+      <height>23</height>
      </rect>
     </property>
     <property name="text">
-     <string>功能</string>
+     <string>选择文件</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="button_start">
+    <property name="geometry">
+     <rect>
+      <x>1340</x>
+      <y>650</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>PushButton</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="file_show">
+    <property name="geometry">
+     <rect>
+      <x>720</x>
+      <y>60</y>
+      <width>640</width>
+      <height>480</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>640</width>
+      <height>480</height>
+     </size>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap>D:/Backup/Documents/My Pictures/test1.jpg</pixmap>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QDateTimeEdit" name="dateTimeEdit">
+   <widget class="QPushButton" name="pushButton">
     <property name="geometry">
      <rect>
-      <x>600</x>
-      <y>0</y>
-      <width>194</width>
-      <height>22</height>
+      <x>100</x>
+      <y>120</y>
+      <width>75</width>
+      <height>23</height>
      </rect>
+    </property>
+    <property name="text">
+     <string>PushButton</string>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_2">
     <property name="geometry">
      <rect>
-      <x>70</x>
-      <y>150</y>
+      <x>100</x>
+      <y>220</y>
       <width>75</width>
       <height>23</height>
      </rect>
     </property>
     <property name="text">
-     <string>功能二</string>
+     <string>PushButton</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_1">
+   <widget class="QPushButton" name="pushButton_3">
     <property name="geometry">
      <rect>
-      <x>70</x>
-      <y>90</y>
+      <x>100</x>
+      <y>390</y>
       <width>75</width>
       <height>23</height>
      </rect>
     </property>
     <property name="text">
-     <string>功能一</string>
+     <string>PushButton</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_show">
+   <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>330</x>
-      <y>60</y>
-      <width>261</width>
-      <height>51</height>
+      <x>760</x>
+      <y>660</y>
+      <width>53</width>
+      <height>15</height>
      </rect>
     </property>
     <property name="text">
-     <string>print_show</string>
+     <string>文件名:</string>
     </property>
-    <property name="wordWrap">
-     <bool>true</bool>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
     </property>
    </widget>
   </widget>
@@ -105,7 +148,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
+     <width>1600</width>
      <height>21</height>
     </rect>
    </property>
@@ -138,7 +181,6 @@
    <addaction name="menu_3"/>
    <addaction name="menu_4"/>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
   <widget class="QToolBar" name="toolBar">
    <property name="windowTitle">
     <string>toolBar</string>
@@ -154,7 +196,7 @@
   <action name="stresstest">
    <property name="icon">
     <iconset>
-     <normaloff>C:/Users/Administrator/.designer/backup/icon/压力测试.png</normaloff>C:/Users/Administrator/.designer/backup/icon/压力测试.png</iconset>
+     <normaloff>C:/Users/Administrator/.designer/backup/icon/test.png</normaloff>C:/Users/Administrator/.designer/backup/icon/test.png</iconset>
    </property>
    <property name="text">
     <string>压力测试</string>
@@ -163,7 +205,7 @@
   <action name="version">
    <property name="icon">
     <iconset>
-     <normaloff>C:/Users/Administrator/.designer/backup/icon/官方版本.png</normaloff>C:/Users/Administrator/.designer/backup/icon/官方版本.png</iconset>
+     <normaloff>C:/Users/Administrator/.designer/backup/icon/version.png</normaloff>C:/Users/Administrator/.designer/backup/icon/version.png</iconset>
    </property>
    <property name="text">
     <string>软件版本</string>
@@ -172,13 +214,15 @@
   <action name="actionExit">
    <property name="icon">
     <iconset>
-     <normaloff>C:/Users/Administrator/.designer/backup/icon/退出.png</normaloff>C:/Users/Administrator/.designer/backup/icon/退出.png</iconset>
+     <normaloff>C:/Users/Administrator/.designer/backup/icon/exit.png</normaloff>C:/Users/Administrator/.designer/backup/icon/exit.png</iconset>
    </property>
    <property name="text">
     <string>退出</string>
    </property>
   </action>
  </widget>
- <resources/>
+ <resources>
+  <include location="source.qrc"/>
+ </resources>
  <connections/>
 </ui>

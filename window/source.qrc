@@ -1,0 +1,15 @@
+<RCC>
+  <qresource prefix="icon">
+    <file>icon/bright.jpg</file>
+    <file>icon/LOGO.png</file>
+    <file>icon/Mate.png</file>
+    <file>icon/Sage.png</file>
+    <file>icon/strestest.png</file>
+    <file>icon/exit.png</file>
+    <file>icon/function.png</file>
+    <file>icon/test.png</file>
+    <file>icon/version.png</file>
+    <file>icon/win1.png</file>
+    <file>icon/菜单.png</file>
+  </qresource>
+</RCC>
