@@ -56,7 +56,10 @@ class LoginWindow(QWidget, Ui_Dialog):
         return self.close()
 
 class MateWindow(QMainWindow,Ui_MainWindow):
-    '''Meta处理窗口'''
+    '''Meta处理窗口
+    @b:QPushButton
+    @lab:QLabel
+    '''
     def __init__(self, parent=None):
         super().__init__()
         screen_w = QApplication.primaryScreen().size().width()
@@ -67,9 +70,12 @@ class MateWindow(QMainWindow,Ui_MainWindow):
         self.win_y = (screen_h/2 - win_h) 
         self.move(self.win_x, self.win_y)
         self.setupUi(self)
-        print(self.file_show.size())
         self.msg_1 = []
-        self.button_filename.clicked.connect(self.select_file)
+        self.b_filename.clicked.connect(self.select_file)
+        self.a_Exit.triggered.connect(self.closewin)
+        self.b_dectect.clicked.connect(self.display_detect_page)
+        self.b_segmentation.clicked.connect(self.dispaly_segmentation_page)
+        self.b_filter.clicked.connect(self.dispaly_filter_page)
         self.show()
 
     def back2login(self):
@@ -79,11 +85,7 @@ class MateWindow(QMainWindow,Ui_MainWindow):
 
 
     def msg_print(self):
-        for i in range(100):
-            self.msg_1.append(1)
-        print(self.msg_1)
-        self.label.setText(str(self.msg_1))
-        self.label.repaint()
+        pass
 
     def palyvideo(self):
         pass
@@ -92,9 +94,23 @@ class MateWindow(QMainWindow,Ui_MainWindow):
     def select_file(self):
         self.file_path, _ = QFileDialog.getOpenFileName(self,dir="./Mate/img", filter="*.jpg; *.png; *.jpeg")
         if self.file_path:
-            self.file_show.setPixmap(QPixmap(self.file_path))
-            self.file_name.setText(self.file_path)
+            self.lab_img.setPixmap(QPixmap(self.file_path))
+            # self.lab_img.setScaledContents(True)
+            self.b_filename.setText(self.file_path)
 
+
+    def display_detect_page(self):
+        return self.stackedWidget.setCurrentIndex(0)
+
+
+    def dispaly_segmentation_page(self):
+        return self.stackedWidget.setCurrentIndex(1)
+
+    def dispaly_filter_page(self):
+        return self.stackedWidget.setCurrentIndex(2)
+
+    def closewin(self):
+        return self.close()
 
 # 程序入口
 if __name__ == "__main__":
