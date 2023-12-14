@@ -8,7 +8,8 @@ from PySide6.QtUiTools import QUiLoader
 from window.login_ui import Ui_Dialog
 from window.MateWin_ui import Ui_MainWindow
 from lib.Windows import Windows
-
+from src.video_detect import PPE_detect
+from src.MetaSystem import MetaSystem
 # 继承QWidget类，以获取其属性和方法
 class LoginWindow(QWidget, Ui_Dialog):
     '''登录界面处理窗口'''
@@ -62,6 +63,12 @@ class MateWindow(QMainWindow,Ui_MainWindow):
     '''
     def __init__(self, parent=None):
         super().__init__()
+        """
+        1、参数配置
+        2 硬件检测
+        3、窗口设置
+        """
+        self.meta = MetaSystem()
         screen_w = QApplication.primaryScreen().size().width()
         screen_h = QApplication.primaryScreen().size().height()
         win_w = self.frameGeometry().getRect()[2]
@@ -76,6 +83,7 @@ class MateWindow(QMainWindow,Ui_MainWindow):
         self.b_dectect.clicked.connect(self.display_detect_page)
         self.b_segmentation.clicked.connect(self.dispaly_segmentation_page)
         self.b_filter.clicked.connect(self.dispaly_filter_page)
+        self.b_start.clicked.connect(self.display_camera)
         self.show()
 
     def back2login(self):
@@ -90,6 +98,10 @@ class MateWindow(QMainWindow,Ui_MainWindow):
     def palyvideo(self):
         pass
 
+    def display_camera(self):
+        ppe = PPE_detect()            
+        ppe.detect()
+        pass
 
     def select_file(self):
         self.file_path, _ = QFileDialog.getOpenFileName(self,dir="./Mate/img", filter="*.jpg; *.png; *.jpeg")

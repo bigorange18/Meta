@@ -42,6 +42,7 @@
 runs/*
 data/*
 dataset/
+datasets/
 data/images/*
 
 

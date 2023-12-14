@@ -1,6 +1,6 @@
 import cv2, time, math
 import numpy as np
-import mediapipe as mp
+# import mediapipe as mp
 
 
 # 方块管理类
