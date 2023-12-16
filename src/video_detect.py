@@ -62,7 +62,6 @@ class PPE_detect:
         overlay = cv2.imread(fileName)
         # overlay = cv2.cvtColor(overlay,cv2.COLOR_RGB2BGR)
         overlay = cv2.resize(overlay,(0,0), fx=0.3, fy=0.3)
-
         return overlay
 
     def get_iou(self,boxA, boxB):

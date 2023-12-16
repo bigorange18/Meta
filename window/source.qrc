@@ -1,7 +1,10 @@
 <RCC>
   <qresource prefix="icon">
+    <file>icon/home.png</file>
+    <file>icon/chat.png</file>
     <file>icon/bright.jpg</file>
     <file>icon/LOGO.png</file>
+    <file>icon/logo.jpg</file>
     <file>icon/Mate.png</file>
     <file>icon/Sage.png</file>
     <file>icon/strestest.png</file>

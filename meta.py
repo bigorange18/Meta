@@ -1,8 +1,9 @@
 import sys
 import cv2
+import time
 from PySide6.QtWidgets import QApplication, QWidget,QMessageBox,QMainWindow,QFileDialog,QDialog,QScrollArea,QLabel
 from PySide6.QtWidgets import QMainWindow, QDialog, QLabel, QPushButton, QLineEdit
-from PySide6.QtGui import QCursor, QPixmap
+from PySide6.QtGui import QCursor, QPixmap, QImage
 from PySide6.QtCore import Qt
 from PySide6.QtUiTools import QUiLoader
 from window.login_ui import Ui_Dialog
@@ -98,9 +99,136 @@ class MateWindow(QMainWindow,Ui_MainWindow):
     def palyvideo(self):
         pass
 
+    def getPng(self,fileName):
+        """
+        获取PNG图像
+        @return numpy array 
+        """
+        overlay = cv2.imread(fileName)
+        # overlay = cv2.cvtColor(overlay,cv2.COLOR_RGB2BGR)
+        overlay = cv2.resize(overlay,(0,0), fx=0.3, fy=0.3)
+        return overlay
+
+
+    def get_iou(self,boxA, boxB):
+        """
+        计算两个框的IOU
+
+        @param: boxA,boxB list形式的框坐标
+        @return: iou float 
+        """
+        boxA = [int(x) for x in boxA]
+        boxB = [int(x) for x in boxB]
+
+        xA = max(boxA[0], boxB[0])
+        yA = max(boxA[1], boxB[1])
+        xB = min(boxA[2], boxB[2])
+        yB = min(boxA[3], boxB[3])
+
+        interArea = max(0, xB - xA + 1) * max(0, yB - yA + 1)
+
+        boxAArea = (boxA[2] - boxA[0] + 1) * (boxA[3] - boxA[1] + 1)
+        boxBArea = (boxB[2] - boxB[0] + 1) * (boxB[3] - boxB[1] + 1)
+
+        iou = interArea / float(boxAArea + boxBArea - interArea)
+
+        return iou
+    def get_person_info_list(self,person_list,hat_list,vest_list):
+        """
+        获取每个人的完整信息
+        
+        @param: person_list,hat_list,vest_list numpy array
+        @return  person_info_list list
+        """
+        hat_iou_thresh = 0
+        vest_iou_thresh = 0
+
+        person_info_list = []
+
+        for person in person_list:
+            person_info_item = [[],[],[]]
+            # 人体框
+            person_box = person[:5]
+            
+            person_info_item[0]= person_box
+            # 依次与帽子计算IOU
+            for hat in hat_list:
+                hat_box = hat[:6]
+                hat_iou = self.get_iou(person_box, hat_box)
+                
+                if hat_iou > hat_iou_thresh:
+                    person_info_item[1] = hat_box
+                    break
+                    
+            # 依次与防护服计算IOU
+            for vest in vest_list:
+                vest_box = vest[:5]
+                vest_iou = self.get_iou(person_box, vest_box)
+
+                
+                if vest_iou > vest_iou_thresh:
+                    person_info_item[2] = vest_box
+                    break
+
+            person_info_list.append(person_info_item)
+        
+        return person_info_list
+
+
     def display_camera(self):
-        ppe = PPE_detect()            
-        ppe.detect()
+        self.meta.model.conf = 0.3
+        self.meta.sys_status = 3
+        # 加载浮层
+        self.overlay_person = self.getPng('./icons/person.png')
+        self.overlay_vest = [
+            self.getPng('./icons/vest_on.png'),
+            self.getPng('./icons/vest_off.png')
+        ]
+        # 
+        self.overlay_hat = [
+            self.getPng('./icons/hat_blue.png'),
+            self.getPng('./icons/hat_red.png'),
+            self.getPng('./icons/hat_white.png'),
+            self.getPng('./icons/hat_yellow.png'),
+            self.getPng('./icons/hat_off.png'), # 最后一个不戴帽子
+        ]
+        self.color_hat = [(255,0,0),(0,0,255),(255,255,255),(0,255,255)]
+
+
+        if self.meta.camera.is_active:
+            cap = cv2.VideoCapture(0)
+        while self.meta.sys_status ==3:
+            ret,frame = cap.read()
+            # 反转
+            frame = cv2.flip(frame,1)
+            # 转为RGB
+            img_cvt = cv2.cvtColor(frame,cv2.COLOR_BGR2RGB)
+            # 记录推理耗时
+            start_time = time.time()
+            # 推理
+            results = self.meta.model(img_cvt)
+            pd = results.pandas().xyxy[0]
+            person_list = pd[pd['name']=='person'].to_numpy()
+            print(person_list)
+            #遍历每个人，渲染相应数据
+            for person_box in person_list:
+                p_l,p_t,p_r,p_b = person_box[:4]
+                p_l,p_t,p_r,p_b = int(p_l),int(p_t),int(p_r),int(p_b)
+                conf = person_box[4]
+                conf_txt =str(round(conf*100,1) ) + '%'
+                cv2.rectangle(frame,(p_l,p_t),(p_r,p_b),(0,255,0),5)
+                cv2.putText(frame,conf_txt,(p_l,p_t-35),cv2.FONT_ITALIC,1,(0,255,0),2)  
+            end_time = time.time()
+            fps_text = 1/(end_time - start_time)
+            cv2.putText(frame,'FPS: '+ str(round(fps_text,2)),(30,50),cv2.FONT_ITALIC,1,(0,255,0),2)
+            cv2.putText(frame,'Person: '+ str(len(person_list)),(30,100),cv2.FONT_ITALIC,1,(0,255,0),2)
+            frame_2_pixmap = QImage(frame.data, frame.shape[1],frame.shape[0],frame.strides[0],QImage.Format_RGB888).rgbSwapped()
+            self.lab_img.setPixmap(QPixmap.fromImage(frame_2_pixmap))
+            cv2.imshow('demo',frame)
+            if cv2.waitKey(10) & 0xFF == ord('q'):
+                break
+        cap.release()
+        cv2.destroyAllWindows()
         pass
 
     def select_file(self):
