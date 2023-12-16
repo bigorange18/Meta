@@ -1,7 +1,11 @@
 <RCC>
   <qresource prefix="icon">
-    <file>icon/home.png</file>
+    <file>icon/small.jpg</file>
+    <file>icon/need.jpg</file>
+    <file>icon/function.png</file>
     <file>icon/chat.png</file>
+    <file>icon/home.png</file>
+    <file>icon/home_1.png</file>
     <file>icon/bright.jpg</file>
     <file>icon/LOGO.png</file>
     <file>icon/logo.jpg</file>
@@ -13,6 +17,5 @@
     <file>icon/test.png</file>
     <file>icon/version.png</file>
     <file>icon/win1.png</file>
-    <file>icon/菜单.png</file>
   </qresource>
 </RCC>

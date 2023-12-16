@@ -226,13 +226,15 @@ class Ui_MainWindow(object):
         self.page_2.setObjectName(u"page_2")
         self.label = QLabel(self.page_2)
         self.label.setObjectName(u"label")
-        self.label.setGeometry(QRect(490, 400, 53, 15))
+        self.label.setGeometry(QRect(80, 50, 641, 701))
+        self.label.setPixmap(QPixmap(u":/icon/icon/need.jpg"))
         self.stackedWidget.addWidget(self.page_2)
         self.page_3 = QWidget()
         self.page_3.setObjectName(u"page_3")
         self.label_2 = QLabel(self.page_3)
         self.label_2.setObjectName(u"label_2")
-        self.label_2.setGeometry(QRect(400, 360, 53, 15))
+        self.label_2.setGeometry(QRect(30, 20, 711, 731))
+        self.label_2.setPixmap(QPixmap(u":/icon/icon/small.jpg"))
         self.stackedWidget.addWidget(self.page_3)
         self.page_4 = QWidget()
         self.page_4.setObjectName(u"page_4")
@@ -266,6 +268,7 @@ class Ui_MainWindow(object):
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.label_3 = QLabel(self.frame)
         self.label_3.setObjectName(u"label_3")
+        self.label_3.setMinimumSize(QSize(170, 170))
         self.label_3.setStyleSheet(u"image:url(:/icon/icon/logo.jpg)")
         self.label_3.setWordWrap(False)
 
@@ -277,7 +280,12 @@ class Ui_MainWindow(object):
 
         self.l_fuction = QListWidget(self.frame)
         icon4 = QIcon()
-        icon4.addFile(u":/icon/icon/home.png", QSize(), QIcon.Normal, QIcon.Off)
+        iconThemeName = u"audio-x-generic"
+        if QIcon.hasThemeIcon(iconThemeName):
+            icon4 = QIcon.fromTheme(iconThemeName)
+        else:
+            icon4.addFile(u":/icon/icon/home_1.png", QSize(), QIcon.Normal, QIcon.Off)
+
         __qlistwidgetitem = QListWidgetItem(self.l_fuction)
         __qlistwidgetitem.setIcon(icon4);
         icon5 = QIcon()
@@ -342,7 +350,6 @@ class Ui_MainWindow(object):
 
         self.verticalLayout.addItem(self.verticalSpacer_8)
 
-        self.verticalLayout.setStretch(0, 1)
         self.verticalLayout.setStretch(2, 2)
         self.verticalLayout.setStretch(4, 1)
 
@@ -376,7 +383,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.stackedWidget.setCurrentIndex(4)
+        self.stackedWidget.setCurrentIndex(2)
 
 
         QMetaObject.connectSlotsByName(MainWindow)
@@ -398,8 +405,8 @@ class Ui_MainWindow(object):
         self.b_start.setText(QCoreApplication.translate("MainWindow", u"start", None))
         self.b_end.setText(QCoreApplication.translate("MainWindow", u"end", None))
         self.label_4.setText(QCoreApplication.translate("MainWindow", u"\u6253\u5370\u8f93\u51fa\u4fe1\u606f", None))
-        self.label.setText(QCoreApplication.translate("MainWindow", u"\u5f00\u53d1\u4e2d", None))
-        self.label_2.setText(QCoreApplication.translate("MainWindow", u"111", None))
+        self.label.setText("")
+        self.label_2.setText("")
         self.label_5.setText(QCoreApplication.translate("MainWindow", u"\u535a\u5ba2", None))
         self.label_6.setText(QCoreApplication.translate("MainWindow", u"\u5176\u4ed6", None))
         self.label_3.setText("")
@@ -418,7 +425,7 @@ class Ui_MainWindow(object):
         ___qlistwidgetitem4.setText(QCoreApplication.translate("MainWindow", u"\u5176\u4ed6", None));
         self.l_fuction.setSortingEnabled(__sortingEnabled)
 
-        self.pushButton.setText(QCoreApplication.translate("MainWindow", u"\u4e2a\u4eba\u4fe1\u606f", None))
+        self.pushButton.setText(QCoreApplication.translate("MainWindow", u"GitHub", None))
         self.menu.setTitle(QCoreApplication.translate("MainWindow", u"\u6587\u4ef6", None))
         self.menu_2.setTitle(QCoreApplication.translate("MainWindow", u"\u7f16\u8f91", None))
         self.menu_3.setTitle(QCoreApplication.translate("MainWindow", u"\u6743\u91cd", None))

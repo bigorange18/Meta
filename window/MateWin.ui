@@ -114,7 +114,7 @@ border-radius:30px
 }</string>
             </property>
             <property name="currentIndex">
-             <number>4</number>
+             <number>2</number>
             </property>
             <widget class="QWidget" name="page">
              <property name="styleSheet">
@@ -343,14 +343,17 @@ QWidget {background-color: }</string>
              <widget class="QLabel" name="label">
               <property name="geometry">
                <rect>
-                <x>490</x>
-                <y>400</y>
-                <width>53</width>
-                <height>15</height>
+                <x>80</x>
+                <y>50</y>
+                <width>641</width>
+                <height>701</height>
                </rect>
               </property>
               <property name="text">
-               <string>开发中</string>
+               <string/>
+              </property>
+              <property name="pixmap">
+               <pixmap resource="source.qrc">:/icon/icon/need.jpg</pixmap>
               </property>
              </widget>
             </widget>
@@ -358,14 +361,17 @@ QWidget {background-color: }</string>
              <widget class="QLabel" name="label_2">
               <property name="geometry">
                <rect>
-                <x>400</x>
-                <y>360</y>
-                <width>53</width>
-                <height>15</height>
+                <x>30</x>
+                <y>20</y>
+                <width>711</width>
+                <height>731</height>
                </rect>
               </property>
               <property name="text">
-               <string>111</string>
+               <string/>
+              </property>
+              <property name="pixmap">
+               <pixmap resource="source.qrc">:/icon/icon/small.jpg</pixmap>
               </property>
              </widget>
             </widget>
@@ -430,9 +436,15 @@ border-radius:20px
          <property name="frameShadow">
           <enum>QFrame::Raised</enum>
          </property>
-         <layout class="QVBoxLayout" name="verticalLayout" stretch="1,0,2,0,1,0">
+         <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,2,0,1,0">
           <item>
            <widget class="QLabel" name="label_3">
+            <property name="minimumSize">
+             <size>
+              <width>170</width>
+              <height>170</height>
+             </size>
+            </property>
             <property name="styleSheet">
              <string notr="true">image:url(:/icon/icon/logo.jpg)</string>
             </property>
@@ -488,8 +500,8 @@ background-color:  transparent;
               <string>Home</string>
              </property>
              <property name="icon">
-              <iconset resource="source.qrc">
-               <normaloff>:/icon/icon/home.png</normaloff>:/icon/icon/home.png</iconset>
+              <iconset theme="audio-x-generic" resource="source.qrc">
+               <normaloff>:/icon/icon/home_1.png</normaloff>:/icon/icon/home_1.png</iconset>
              </property>
             </item>
             <item>
@@ -555,7 +567,7 @@ padding:8px;
 </string>
             </property>
             <property name="text">
-             <string>个人信息</string>
+             <string>GitHub</string>
             </property>
            </widget>
           </item>

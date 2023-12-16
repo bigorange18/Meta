@@ -105,7 +105,6 @@ class MateWindow(QMainWindow,Ui_MainWindow):
         overlay = cv2.resize(overlay,(0,0), fx=0.3, fy=0.3)
         return overlay
 
-
     def get_iou(self,boxA, boxB):
         """
         计算两个框的IOU
@@ -127,8 +126,8 @@ class MateWindow(QMainWindow,Ui_MainWindow):
         boxBArea = (boxB[2] - boxB[0] + 1) * (boxB[3] - boxB[1] + 1)
 
         iou = interArea / float(boxAArea + boxBArea - interArea)
-
         return iou
+    
     def get_person_info_list(self,person_list,hat_list,vest_list):
         """
         获取每个人的完整信息
@@ -170,32 +169,44 @@ class MateWindow(QMainWindow,Ui_MainWindow):
         
         return person_info_list
 
+    def select_file(self):
+        self.file_path, _ = QFileDialog.getOpenFileName(self,dir="./Mate/img", filter="*.jpg; *.png; *.jpeg; *.mp4")
+        if self.file_path:
+            self.lab_img.setPixmap(QPixmap(self.file_path))
+            # self.lab_img.setScaledContents(True)
+            self.b_filename.setText(self.file_path)
 
-    def display_camera(self):
+    def detect_start(self):
+        if not self.meta.camera.is_active:
+            return
+        # self.b_filename.setText('')
+        if self.b_filename.text() == '':
+            cap = cv2.VideoCapture(0)
+
+        elif self.b_filename.text().endswith(".jpg") or self.b_filename.text().endswith(".png"):
+            frame = cv2.imread(self.b_filename.text())
+            self.detect_ing(frame)
+            return
+        
+        elif self.b_filename.text().endswith(".mp4"):
+            cap = cv2.VideoCapture(self.b_filename.text())     
+        else:
+            pass
+
         self.meta.model.conf = 0.3
         self.meta.sys_status = 3
-        # 加载浮层
-        self.overlay_person = self.getPng('./icons/person.png')
-        self.overlay_vest = [
-            self.getPng('./icons/vest_on.png'),
-            self.getPng('./icons/vest_off.png')
-        ]
-        # 
-        self.overlay_hat = [
-            self.getPng('./icons/hat_blue.png'),
-            self.getPng('./icons/hat_red.png'),
-            self.getPng('./icons/hat_white.png'),
-            self.getPng('./icons/hat_yellow.png'),
-            self.getPng('./icons/hat_off.png'), # 最后一个不戴帽子
-        ]
-        self.color_hat = [(255,0,0),(0,0,255),(255,255,255),(0,255,255)]
 
-
-        if self.meta.camera.is_active:
-            cap = cv2.VideoCapture(0)
-        while self.meta.sys_status ==3:
+        while self.meta.sys_status == 3:
             ret,frame = cap.read()
-            # 反转
+            if not ret:
+                break
+            self.detect_ing(frame)
+            # cv2.imshow('demo',frame)
+            if cv2.waitKey(10) & 0xFF == ord('q'):
+                break
+        cap.release()
+
+    def detect_ing(self,frame):
             frame = cv2.flip(frame,1)
             # 转为RGB
             img_cvt = cv2.cvtColor(frame,cv2.COLOR_BGR2RGB)
@@ -220,13 +231,6 @@ class MateWindow(QMainWindow,Ui_MainWindow):
             cv2.putText(frame,'Person: '+ str(len(person_list)),(30,100),cv2.FONT_ITALIC,1,(0,255,0),2)
             frame_2_pixmap = QImage(frame.data, frame.shape[1],frame.shape[0],frame.strides[0],QImage.Format_RGB888).rgbSwapped()
             self.lab_img.setPixmap(QPixmap.fromImage(frame_2_pixmap))
-            cv2.imshow('demo',frame)
-            if cv2.waitKey(10) & 0xFF == ord('q'):
-                break
-        cap.release()
-        cv2.destroyAllWindows()
-        pass
-
 
     def botton_bind(self):
         # 选择文件
@@ -235,7 +239,7 @@ class MateWindow(QMainWindow,Ui_MainWindow):
         self.a_Exit.triggered.connect(self.closewin)
 
         # 
-        self.b_start.clicked.connect(self.display_camera)
+        self.b_start.clicked.connect(self.detect_start)
         # 停止
         self.b_end.clicked.connect(self.detect_stop)
 
@@ -245,14 +249,6 @@ class MateWindow(QMainWindow,Ui_MainWindow):
     def display_function_page(self,current, previous):
         print(self.l_fuction.currentIndex().row(),self.l_fuction.currentItem().text())
         return self.stackedWidget.setCurrentIndex(self.l_fuction.currentIndex().row())
-
-
-    def select_file(self):
-        self.file_path, _ = QFileDialog.getOpenFileName(self,dir="./Mate/img", filter="*.jpg; *.png; *.jpeg")
-        if self.file_path:
-            self.lab_img.setPixmap(QPixmap(self.file_path))
-            # self.lab_img.setScaledContents(True)
-            self.b_filename.setText(self.file_path)
 
     def detect_stop(self):
         self.meta.sys_status = 2

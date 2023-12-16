@@ -6,7 +6,7 @@
 代码下载：
 
 ```bash
-git clone https://github.com/gitbug1949/virtual.git
+git clone https://github.com/bigorange18/Meta.git
 ```
 
 配置环境和安装依赖：
@@ -15,4 +15,9 @@ git clone https://github.com/gitbug1949/virtual.git
 conda create -n py39 python=3.9.15
 conda activate py39
 pip install -r requirement.txt
+```
+
+```
+python meta.py
+
 ```
