@@ -61,6 +61,7 @@ class MateWindow(QMainWindow,Ui_MainWindow):
     '''Meta处理窗口
     @b:QPushButton
     @lab:QLabel
+    @l: listWidget
     '''
     def __init__(self, parent=None):
         super().__init__()
@@ -76,15 +77,10 @@ class MateWindow(QMainWindow,Ui_MainWindow):
         win_h = self.frameGeometry().getRect()[3]
         self.win_x = (screen_w/2 - win_w)
         self.win_y = (screen_h/2 - win_h) 
+        self.cap = None
         self.move(self.win_x, self.win_y)
         self.setupUi(self)
-        self.msg_1 = []
-        self.b_filename.clicked.connect(self.select_file)
-        self.a_Exit.triggered.connect(self.closewin)
-        self.b_dectect.clicked.connect(self.display_detect_page)
-        self.b_segmentation.clicked.connect(self.dispaly_segmentation_page)
-        self.b_filter.clicked.connect(self.dispaly_filter_page)
-        self.b_start.clicked.connect(self.display_camera)
+        self.botton_bind()
         self.show()
 
     def back2login(self):
@@ -231,6 +227,26 @@ class MateWindow(QMainWindow,Ui_MainWindow):
         cv2.destroyAllWindows()
         pass
 
+
+    def botton_bind(self):
+        # 选择文件
+        self.b_filename.clicked.connect(self.select_file)
+        # 退出
+        self.a_Exit.triggered.connect(self.closewin)
+
+        # 
+        self.b_start.clicked.connect(self.display_camera)
+        # 停止
+        self.b_end.clicked.connect(self.detect_stop)
+
+        # 
+        self.l_fuction.currentItemChanged.connect(self.display_function_page)
+
+    def display_function_page(self,current, previous):
+        print(self.l_fuction.currentIndex().row(),self.l_fuction.currentItem().text())
+        return self.stackedWidget.setCurrentIndex(self.l_fuction.currentIndex().row())
+
+
     def select_file(self):
         self.file_path, _ = QFileDialog.getOpenFileName(self,dir="./Mate/img", filter="*.jpg; *.png; *.jpeg")
         if self.file_path:
@@ -238,16 +254,11 @@ class MateWindow(QMainWindow,Ui_MainWindow):
             # self.lab_img.setScaledContents(True)
             self.b_filename.setText(self.file_path)
 
+    def detect_stop(self):
+        self.meta.sys_status = 2
+        if self.cap is not None:
+            self.cap.release()
 
-    def display_detect_page(self):
-        return self.stackedWidget.setCurrentIndex(0)
-
-
-    def dispaly_segmentation_page(self):
-        return self.stackedWidget.setCurrentIndex(1)
-
-    def dispaly_filter_page(self):
-        return self.stackedWidget.setCurrentIndex(2)
 
     def closewin(self):
         return self.close()

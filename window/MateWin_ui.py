@@ -21,7 +21,7 @@ from PySide6.QtWidgets import (QApplication, QFrame, QGridLayout, QGroupBox,
     QMainWindow, QMenu, QMenuBar, QPushButton,
     QSizePolicy, QSpacerItem, QStackedWidget, QVBoxLayout,
     QWidget)
-import source_rc
+import window.source_rc
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -234,6 +234,18 @@ class Ui_MainWindow(object):
         self.label_2.setObjectName(u"label_2")
         self.label_2.setGeometry(QRect(400, 360, 53, 15))
         self.stackedWidget.addWidget(self.page_3)
+        self.page_4 = QWidget()
+        self.page_4.setObjectName(u"page_4")
+        self.label_5 = QLabel(self.page_4)
+        self.label_5.setObjectName(u"label_5")
+        self.label_5.setGeometry(QRect(540, 380, 53, 15))
+        self.stackedWidget.addWidget(self.page_4)
+        self.page_5 = QWidget()
+        self.page_5.setObjectName(u"page_5")
+        self.label_6 = QLabel(self.page_5)
+        self.label_6.setObjectName(u"label_6")
+        self.label_6.setGeometry(QRect(240, 420, 53, 15))
+        self.stackedWidget.addWidget(self.page_5)
 
         self.horizontalLayout_2.addWidget(self.stackedWidget)
 
@@ -263,29 +275,29 @@ class Ui_MainWindow(object):
 
         self.verticalLayout.addItem(self.verticalSpacer_5)
 
-        self.listWidget = QListWidget(self.frame)
+        self.l_fuction = QListWidget(self.frame)
         icon4 = QIcon()
         icon4.addFile(u":/icon/icon/home.png", QSize(), QIcon.Normal, QIcon.Off)
-        __qlistwidgetitem = QListWidgetItem(self.listWidget)
+        __qlistwidgetitem = QListWidgetItem(self.l_fuction)
         __qlistwidgetitem.setIcon(icon4);
         icon5 = QIcon()
         icon5.addFile(u":/icon/icon/chat.png", QSize(), QIcon.Normal, QIcon.Off)
-        __qlistwidgetitem1 = QListWidgetItem(self.listWidget)
+        __qlistwidgetitem1 = QListWidgetItem(self.l_fuction)
         __qlistwidgetitem1.setIcon(icon5);
         icon6 = QIcon()
         icon6.addFile(u":/icon/icon/function.png", QSize(), QIcon.Normal, QIcon.Off)
-        __qlistwidgetitem2 = QListWidgetItem(self.listWidget)
+        __qlistwidgetitem2 = QListWidgetItem(self.l_fuction)
         __qlistwidgetitem2.setIcon(icon6);
         icon7 = QIcon()
         icon7.addFile(u":/icon/icon/test.png", QSize(), QIcon.Normal, QIcon.Off)
-        __qlistwidgetitem3 = QListWidgetItem(self.listWidget)
+        __qlistwidgetitem3 = QListWidgetItem(self.l_fuction)
         __qlistwidgetitem3.setIcon(icon7);
         icon8 = QIcon()
         icon8.addFile(u":/icon/icon/win1.png", QSize(), QIcon.Normal, QIcon.Off)
-        __qlistwidgetitem4 = QListWidgetItem(self.listWidget)
+        __qlistwidgetitem4 = QListWidgetItem(self.l_fuction)
         __qlistwidgetitem4.setIcon(icon8);
-        self.listWidget.setObjectName(u"listWidget")
-        self.listWidget.setStyleSheet(u"QListView {\n"
+        self.l_fuction.setObjectName(u"l_fuction")
+        self.l_fuction.setStyleSheet(u"QListView {\n"
 "	border:none;\n"
 "	background-color: rgba(255, 255, 255, 0);\n"
 "	color: rgb(255, 255, 255);\n"
@@ -308,7 +320,7 @@ class Ui_MainWindow(object):
 "}\n"
 "")
 
-        self.verticalLayout.addWidget(self.listWidget)
+        self.verticalLayout.addWidget(self.l_fuction)
 
         self.verticalSpacer_6 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
 
@@ -364,7 +376,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.stackedWidget.setCurrentIndex(0)
+        self.stackedWidget.setCurrentIndex(4)
 
 
         QMetaObject.connectSlotsByName(MainWindow)
@@ -388,21 +400,23 @@ class Ui_MainWindow(object):
         self.label_4.setText(QCoreApplication.translate("MainWindow", u"\u6253\u5370\u8f93\u51fa\u4fe1\u606f", None))
         self.label.setText(QCoreApplication.translate("MainWindow", u"\u5f00\u53d1\u4e2d", None))
         self.label_2.setText(QCoreApplication.translate("MainWindow", u"111", None))
+        self.label_5.setText(QCoreApplication.translate("MainWindow", u"\u535a\u5ba2", None))
+        self.label_6.setText(QCoreApplication.translate("MainWindow", u"\u5176\u4ed6", None))
         self.label_3.setText("")
 
-        __sortingEnabled = self.listWidget.isSortingEnabled()
-        self.listWidget.setSortingEnabled(False)
-        ___qlistwidgetitem = self.listWidget.item(0)
+        __sortingEnabled = self.l_fuction.isSortingEnabled()
+        self.l_fuction.setSortingEnabled(False)
+        ___qlistwidgetitem = self.l_fuction.item(0)
         ___qlistwidgetitem.setText(QCoreApplication.translate("MainWindow", u"Home", None));
-        ___qlistwidgetitem1 = self.listWidget.item(1)
+        ___qlistwidgetitem1 = self.l_fuction.item(1)
         ___qlistwidgetitem1.setText(QCoreApplication.translate("MainWindow", u"Chatgpt", None));
-        ___qlistwidgetitem2 = self.listWidget.item(2)
+        ___qlistwidgetitem2 = self.l_fuction.item(2)
         ___qlistwidgetitem2.setText(QCoreApplication.translate("MainWindow", u"\u529f\u80fd", None));
-        ___qlistwidgetitem3 = self.listWidget.item(3)
+        ___qlistwidgetitem3 = self.l_fuction.item(3)
         ___qlistwidgetitem3.setText(QCoreApplication.translate("MainWindow", u"\u535a\u5ba2", None));
-        ___qlistwidgetitem4 = self.listWidget.item(4)
+        ___qlistwidgetitem4 = self.l_fuction.item(4)
         ___qlistwidgetitem4.setText(QCoreApplication.translate("MainWindow", u"\u5176\u4ed6", None));
-        self.listWidget.setSortingEnabled(__sortingEnabled)
+        self.l_fuction.setSortingEnabled(__sortingEnabled)
 
         self.pushButton.setText(QCoreApplication.translate("MainWindow", u"\u4e2a\u4eba\u4fe1\u606f", None))
         self.menu.setTitle(QCoreApplication.translate("MainWindow", u"\u6587\u4ef6", None))
