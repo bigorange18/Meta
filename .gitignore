@@ -44,6 +44,7 @@ data/*
 dataset/
 datasets/
 data/images/*
+log/*
 
 
 coco/

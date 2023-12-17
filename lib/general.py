@@ -1,12 +1,11 @@
 import re
 import os, torch
-import cv2
 import platform
 import time
 import math
 from pathlib import Path
 from subprocess import check_output
-from lib.classes import Camera
+from lib.log import logging 
 
 def check_git_status(repo:str="bigorange18/Meta", branch:str="dev"):
     """
@@ -23,27 +22,9 @@ def check_git_status(repo:str="bigorange18/Meta", branch:str="dev"):
     # remote_branch = check_output(f"git rev-parse --abbrev-ref {remote}/{branch}", shell=True).decode().strip()
     diff_count = check_output(f"git rev-list {local_branch}..{remote}/{branch} --count", shell=True).decode().strip()   
     if diff_count != "0":
-        print(f"{repo} is {diff_count} commit(s) behind {remote}/{branch}")
+        logging.info(f"{repo} is {diff_count} commit(s) behind {remote}/{branch}")
     else:
-        print(f"{repo} is up-to-date with {remote}/{branch}")
-
-def get_camera_status(camera="0"):
-    """
-    获取相机参数
-    """
-    cap = cv2.VideoCapture(camera)
-    if not cap.isOpened():
-        raise IOError("Cannot open webcam")
-    cam = Camera()
-    cam.width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
-    cam.height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
-    cam.fps = cap.get(cv2.CAP_PROP_FPS)
-    cap.release()
-    return cam
-
-
-
-
+        logging.info(f"{repo} is up-to-date with {remote}/{branch}")
 
 
 

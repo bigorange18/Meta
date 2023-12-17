@@ -1,6 +1,6 @@
 git-repo:
     repo: bigorange18/Meta
-    branch: dev
+    branch: master
 
 train:
     device: cuda

@@ -1,0 +1,9 @@
+12/17/2023 18:36:56 PM - INFO - 系统状态已经检测完成status:2
+12/17/2023 18:36:57 PM - DEBUG - matplotlib data path: E:\Anaconda3\envs\torch\lib\site-packages\matplotlib\mpl-data
+12/17/2023 18:36:57 PM - DEBUG - CONFIGDIR=C:\Users\Administrator\.matplotlib
+12/17/2023 18:36:57 PM - DEBUG - interactive is False
+12/17/2023 18:36:57 PM - DEBUG - platform is win32
+12/17/2023 18:36:57 PM - DEBUG - CACHEDIR=C:\Users\Administrator\.matplotlib
+12/17/2023 18:36:57 PM - DEBUG - Using fontManager instance from C:\Users\Administrator\.matplotlib\fontlist-v330.json
+12/17/2023 18:36:59 PM - DEBUG - Loaded backend agg version v2.2.
+12/17/2023 18:37:04 PM - INFO - load model success!

@@ -1,6 +1,6 @@
 import cv2, time, math
 import numpy as np
-# import mediapipe as mp
+import mediapipe as mp
 
 
 # 方块管理类
@@ -247,3 +247,7 @@ class HandControlVolume:
                 if cv2.waitKey(5) & 0xFF == 27 :
                     break
             cap.release()
+
+if __name__ == '__main__':
+    hand = HandControlVolume()
+    hand.Run()

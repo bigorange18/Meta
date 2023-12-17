@@ -11,6 +11,7 @@ from window.MateWin_ui import Ui_MainWindow
 from lib.Windows import Windows
 from src.video_detect import PPE_detect
 from src.MetaSystem import MetaSystem
+from lib.log import logging
 # 继承QWidget类，以获取其属性和方法
 class LoginWindow(QWidget, Ui_Dialog):
     '''登录界面处理窗口'''
@@ -195,7 +196,7 @@ class MateWindow(QMainWindow,Ui_MainWindow):
 
         self.meta.model.conf = 0.3
         self.meta.sys_status = 3
-
+        logging.info("start working!")
         while self.meta.sys_status == 3:
             ret,frame = cap.read()
             if not ret:
