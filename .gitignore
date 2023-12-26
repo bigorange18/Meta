@@ -44,7 +44,7 @@ data/*
 dataset/
 datasets/
 data/images/*
-log/*
+log/test.log
 
 
 coco/

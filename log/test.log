@@ -7,3 +7,32 @@
 12/17/2023 18:36:57 PM - DEBUG - Using fontManager instance from C:\Users\Administrator\.matplotlib\fontlist-v330.json
 12/17/2023 18:36:59 PM - DEBUG - Loaded backend agg version v2.2.
 12/17/2023 18:37:04 PM - INFO - load model success!
+12/25/2023 21:41:56 PM - DEBUG - matplotlib data path: E:\Anaconda3\envs\torch\lib\site-packages\matplotlib\mpl-data
+12/25/2023 21:41:56 PM - DEBUG - CONFIGDIR=C:\Users\Administrator\.matplotlib
+12/25/2023 21:41:56 PM - DEBUG - interactive is False
+12/25/2023 21:41:56 PM - DEBUG - platform is win32
+12/25/2023 21:41:56 PM - DEBUG - CACHEDIR=C:\Users\Administrator\.matplotlib
+12/25/2023 21:41:56 PM - DEBUG - Using fontManager instance from C:\Users\Administrator\.matplotlib\fontlist-v330.json
+12/25/2023 21:41:57 PM - INFO - Meta system status:2
+12/25/2023 21:41:59 PM - DEBUG - Loaded backend agg version v2.2.
+12/25/2023 21:42:04 PM - INFO - load model success!
+12/25/2023 21:42:28 PM - DEBUG - matplotlib data path: E:\Anaconda3\envs\torch\lib\site-packages\matplotlib\mpl-data
+12/25/2023 21:42:28 PM - DEBUG - CONFIGDIR=C:\Users\Administrator\.matplotlib
+12/25/2023 21:42:28 PM - DEBUG - interactive is False
+12/25/2023 21:42:28 PM - DEBUG - platform is win32
+12/25/2023 21:42:28 PM - DEBUG - CACHEDIR=C:\Users\Administrator\.matplotlib
+12/25/2023 21:42:28 PM - DEBUG - Using fontManager instance from C:\Users\Administrator\.matplotlib\fontlist-v330.json
+12/25/2023 21:42:30 PM - INFO - Meta system status:2
+12/25/2023 21:42:31 PM - DEBUG - Loaded backend agg version v2.2.
+12/25/2023 21:42:36 PM - INFO - load model success!
+12/25/2023 21:42:37 PM - INFO - start working!
+12/25/2023 21:42:55 PM - INFO - start working!
+12/25/2023 21:43:24 PM - DEBUG - matplotlib data path: E:\Anaconda3\envs\torch\lib\site-packages\matplotlib\mpl-data
+12/25/2023 21:43:24 PM - DEBUG - CONFIGDIR=C:\Users\Administrator\.matplotlib
+12/25/2023 21:43:24 PM - DEBUG - interactive is False
+12/25/2023 21:43:24 PM - DEBUG - platform is win32
+12/25/2023 21:43:24 PM - DEBUG - CACHEDIR=C:\Users\Administrator\.matplotlib
+12/25/2023 21:43:24 PM - DEBUG - Using fontManager instance from C:\Users\Administrator\.matplotlib\fontlist-v330.json
+12/25/2023 21:43:26 PM - INFO - Meta system status:2
+12/25/2023 21:43:27 PM - DEBUG - Loaded backend agg version v2.2.
+12/25/2023 21:43:30 PM - INFO - load model success!

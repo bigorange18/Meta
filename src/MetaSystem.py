@@ -31,11 +31,11 @@ class MetaSystem(object):
         self._read_cfg(cfg)
         self._SysCheck()
         # 手势拖动方块
-        
+
         # 后台加载模型
         self.thread = threading.Thread(target=self.init_model, args=())
         self.thread.start()
-        check_git_status(self.MetaDic["git-repo"]["repo"], self.MetaDic["git-repo"]["branch"])
+        # check_git_status(self.MetaDic["git-repo"]["repo"], self.MetaDic["git-repo"]["branch"])
 
     def init_model(self):
         self.model = torch.hub.load('./yolov5', 'custom', path='./weights/yolov5s.pt',source='local')  # local repo
