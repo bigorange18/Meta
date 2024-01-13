@@ -23,91 +23,100 @@ class Ui_Dialog(object):
     def setupUi(self, Dialog):
         if not Dialog.objectName():
             Dialog.setObjectName(u"Dialog")
-        Dialog.resize(790, 479)
+        Dialog.resize(1009, 547)
         icon = QIcon()
         icon.addFile(u"icon/2.jpg", QSize(), QIcon.Normal, QIcon.Off)
         Dialog.setWindowIcon(icon)
-        self.layoutWidget = QWidget(Dialog)
-        self.layoutWidget.setObjectName(u"layoutWidget")
-        self.layoutWidget.setGeometry(QRect(50, 110, 671, 234))
-        self.horizontalLayout_4 = QHBoxLayout(self.layoutWidget)
-        self.horizontalLayout_4.setObjectName(u"horizontalLayout_4")
-        self.horizontalLayout_4.setContentsMargins(0, 0, 0, 0)
-        self.verticalLayout = QVBoxLayout()
-        self.verticalLayout.setObjectName(u"verticalLayout")
-        self.label_4 = QLabel(self.layoutWidget)
+        self.verticalLayout_3 = QVBoxLayout(Dialog)
+        self.verticalLayout_3.setObjectName(u"verticalLayout_3")
+        self.verticalLayout_2 = QVBoxLayout()
+        self.verticalLayout_2.setObjectName(u"verticalLayout_2")
+        self.horizontalLayout_5 = QHBoxLayout()
+        self.horizontalLayout_5.setObjectName(u"horizontalLayout_5")
+        self.label_4 = QLabel(Dialog)
         self.label_4.setObjectName(u"label_4")
         font = QFont()
         font.setFamilies([u"\u5b8b\u4f53"])
         font.setPointSize(18)
         self.label_4.setFont(font)
+        self.label_4.setAlignment(Qt.AlignCenter)
 
-        self.verticalLayout.addWidget(self.label_4)
+        self.horizontalLayout_5.addWidget(self.label_4)
 
-        self.label_3 = QLabel(self.layoutWidget)
+
+        self.verticalLayout_2.addLayout(self.horizontalLayout_5)
+
+        self.horizontalLayout_4 = QHBoxLayout()
+        self.horizontalLayout_4.setObjectName(u"horizontalLayout_4")
+        self.label_3 = QLabel(Dialog)
         self.label_3.setObjectName(u"label_3")
         self.label_3.setPixmap(QPixmap(u"icon/LOGO.png"))
 
-        self.verticalLayout.addWidget(self.label_3)
+        self.horizontalLayout_4.addWidget(self.label_3)
 
-
-        self.horizontalLayout_4.addLayout(self.verticalLayout)
-
-        self.verticalLayout_2 = QVBoxLayout()
-        self.verticalLayout_2.setObjectName(u"verticalLayout_2")
+        self.verticalLayout = QVBoxLayout()
+        self.verticalLayout.setObjectName(u"verticalLayout")
         self.horizontalLayout = QHBoxLayout()
         self.horizontalLayout.setObjectName(u"horizontalLayout")
-        self.label = QLabel(self.layoutWidget)
+        self.label = QLabel(Dialog)
         self.label.setObjectName(u"label")
 
         self.horizontalLayout.addWidget(self.label)
 
-        self.login_name = QLineEdit(self.layoutWidget)
+        self.login_name = QLineEdit(Dialog)
         self.login_name.setObjectName(u"login_name")
 
         self.horizontalLayout.addWidget(self.login_name)
 
 
-        self.verticalLayout_2.addLayout(self.horizontalLayout)
+        self.verticalLayout.addLayout(self.horizontalLayout)
 
         self.horizontalLayout_2 = QHBoxLayout()
         self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
-        self.label_2 = QLabel(self.layoutWidget)
+        self.label_2 = QLabel(Dialog)
         self.label_2.setObjectName(u"label_2")
 
         self.horizontalLayout_2.addWidget(self.label_2)
 
-        self.login_password = QLineEdit(self.layoutWidget)
+        self.login_password = QLineEdit(Dialog)
         self.login_password.setObjectName(u"login_password")
         self.login_password.setEchoMode(QLineEdit.Password)
 
         self.horizontalLayout_2.addWidget(self.login_password)
 
 
-        self.verticalLayout_2.addLayout(self.horizontalLayout_2)
+        self.verticalLayout.addLayout(self.horizontalLayout_2)
 
-        self.checkBox = QCheckBox(self.layoutWidget)
+        self.checkBox = QCheckBox(Dialog)
         self.checkBox.setObjectName(u"checkBox")
 
-        self.verticalLayout_2.addWidget(self.checkBox)
+        self.verticalLayout.addWidget(self.checkBox)
 
         self.horizontalLayout_3 = QHBoxLayout()
         self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
-        self.login_button = QPushButton(self.layoutWidget)
+        self.login_button = QPushButton(Dialog)
         self.login_button.setObjectName(u"login_button")
 
         self.horizontalLayout_3.addWidget(self.login_button)
 
-        self.login_fail = QPushButton(self.layoutWidget)
+        self.login_fail = QPushButton(Dialog)
         self.login_fail.setObjectName(u"login_fail")
 
         self.horizontalLayout_3.addWidget(self.login_fail)
 
 
-        self.verticalLayout_2.addLayout(self.horizontalLayout_3)
+        self.verticalLayout.addLayout(self.horizontalLayout_3)
 
 
-        self.horizontalLayout_4.addLayout(self.verticalLayout_2)
+        self.horizontalLayout_4.addLayout(self.verticalLayout)
+
+
+        self.verticalLayout_2.addLayout(self.horizontalLayout_4)
+
+        self.verticalLayout_2.setStretch(0, 1)
+        self.verticalLayout_2.setStretch(1, 8)
+
+        self.verticalLayout_3.addLayout(self.verticalLayout_2)
 
 
         self.retranslateUi(Dialog)
