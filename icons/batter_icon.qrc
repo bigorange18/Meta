@@ -1,0 +1,22 @@
+<RCC>
+  <qresource prefix="batter">
+    <file>../window/batter-icon/home.png</file>
+    <file>../window/batter-icon/home.png</file>
+    <file>../window/batter-icon/home-w.png</file>
+    <file>../window/batter-icon/log_out.png</file>
+    <file>../window/batter-icon/log_out_white.png</file>
+    <file>../window/batter-icon/dashboard.png</file>
+    <file>../window/batter-icon/dashboard_white.png</file>
+    <file>../window/batter-icon/image.png</file>
+    <file>../window/batter-icon/menu.png</file>
+    <file>../window/batter-icon/messages.png</file>
+    <file>../window/batter-icon/messages_white.png</file>
+    <file>../window/batter-icon/notifications.png</file>
+    <file>../window/batter-icon/profile.png</file>
+    <file>../window/batter-icon/profile_pic.png</file>
+    <file>../window/batter-icon/profile_white.png</file>
+    <file>../window/batter-icon/search.png</file>
+    <file>../window/batter-icon/settings.png</file>
+    <file>../window/batter-icon/settings_white.png</file>
+  </qresource>
+</RCC>
